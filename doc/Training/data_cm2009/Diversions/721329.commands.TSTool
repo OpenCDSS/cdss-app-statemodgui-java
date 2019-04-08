@@ -1,0 +1,15 @@
+# Ute Pumping Station (WDID 721235) and Rapid Creek Pumping Plant (WDID 721329)
+#
+# In the last six years or so the Ute Pumping Station has NOT been utilized for purposes other than diligence.
+# According to Tom Crumpton (Ute WCD 970-464-5563) there are no plans to construct the Ute Pumping Station
+# which is decreed at a location below the Grand Valley Canal diversion dam. In the diversion comments it states
+# that the water diverted at WDID 721235 was actually taken at WDID 721329. (2006)
+#
+# This information was collected by James Heath (heath@lrcwe.com)
+#
+setOutputPeriod(10/1950,9/2005)
+setOutputYearType(Water)
+721235.DWR.DivTotal.Month~HydroBase
+721329.DWR.DivTotal.Month~HydroBase
+add(TSID="721329.DWR.DivTotal.Month",TSList="AllTS",HandleMissingHow=IgnoreMissing)
+writeStateMod(TSList=AllMatchingTSID,TSID="721329.DWR.DivTotal.Month",OutputFile="721339.stm",Precision=0)

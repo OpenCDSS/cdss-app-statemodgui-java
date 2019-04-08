@@ -1,0 +1,8 @@
+# Repositories that comprise StateMod GUI
+# - assumes that local folder name will match the repository name
+cdss-app-statemodgui-java
+cdss-archive-nsis-2.46
+cdss-lib-cdss-java
+cdss-lib-common-java
+cdss-lib-models-java
+cdss-util-buildtools

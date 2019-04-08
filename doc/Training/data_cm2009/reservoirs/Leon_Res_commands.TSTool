@@ -1,0 +1,16 @@
+SetOutputYearType(OutputYearType=Water)
+SetOutputPeriod(OutputStart="09/1980",OutputEnd="10/2006")
+# 723842 - MONUMENT RESERVOIR NO 1
+723842.DWR.ResMeasStorage.Day~HydroBase
+TS Alias = NewEndOfMonthTSFromDayTS(DayTSID="723842.DWR.ResMeasStorage.Day",Bracket=16)
+# 723838 - KIRKENDALL RESERVOIR
+723838.DWR.ResMeasStorage.Day~HydroBase
+TS Alias2 = NewEndOfMonthTSFromDayTS(DayTSID="723838.DWR.ResMeasStorage.Day",Bracket=16)
+# 723843 - MONUMENT RESERVOIR NO 2
+723843.DWR.ResMeasStorage.Day~HydroBase
+TS Alias3 = NewEndOfMonthTSFromDayTS(DayTSID="723843.DWR.ResMeasStorage.Day",Bracket=16)
+Free(TSList=AllMatchingTSID,TSID="723842.DWR.ResMeasStorage.Day")
+Free(TSList=AllMatchingTSID,TSID="723838.DWR.ResMeasStorage.Day")
+Free(TSList=AllMatchingTSID,TSID="723843.DWR.ResMeasStorage.Day")
+Add(TSID="Alias",AddTSList=SpecifiedTSID,AddTSID="Alias2,Alias3",HandleMissingHow="IgnoreMissing")
+WriteStateMod(TSList=AllMatchingTSID,TSID="Alias",OutputFile="723842.stm",Precision=0)

@@ -1,0 +1,36 @@
+# cmdlyb.rsp
+#
+#
+# StateMod Response File for historical daily calibration run
+#
+# Type                                    Name
+# ______________________________________  ________________________________________________________________________
+Control                                 = cmdly.ctl
+River_Network                           = cm2005.rin
+Reservoir_Station                       = cm2005B.res
+Diversion_Station                       = cm2005.dds
+StreamGage_Station                      = cm2005.ris
+Instreamflow_Station                    = cm2005.ifs
+Instreamflow_Right                      = cm2005.ifr
+Reservoir_Right                         = cm2005B.rer
+Diversion_Right                         = cm2005.ddr
+Operational_Right                       = cm2005B.opr
+Evaporation_Annual                      = cm2005.eva                                                                                                                                                                                                                                                      
+Stream_Base_Monthly                     = cm2005x.xbm
+Diversion_Demand_Monthly                = cm2005B.ddm
+Instreamflow_Demand_AverageMonthly      = cm2005.ifa
+Instreamflow_Demand_Monthly             = cm2005B.ifm
+DelayTable_Monthly                      = cm2005.dly
+DelayTable_Daily                        = cm2005.dld
+Reservoir_Target_Monthly                = cm2005B.tar
+IrrigationPractice_Yearly               = cm2005.ipy
+ConsumptiveWaterRequirement_Monthly     = cm2005B.iwr
+StateCU_Structure                       = cm2005.str
+Reservoir_Historic_Monthly              = cm2005.eom
+StreamEstimate_Coefficients             = cm2005.rib
+StreamGage_Historic_Monthly             = cm2005.rih
+Stream_Base_Daily                       = cm2005.rbd
+Diversion_Historic_Monthly              = cm2005.ddh
+StreamGage_Historic_Daily               = cm2005.rid
+OutputRequest                           = cm2005.out
+Plan_Data                               = cm2005.pln

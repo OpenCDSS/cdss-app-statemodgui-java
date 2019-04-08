@@ -1,0 +1,20 @@
+#     Baseline Demands for Homestake Project Tunnel
+#
+# Since the Homestake Project is a core component of Springs Utilities’ water supply system, the demand placed at Homestake Tunnel
+# was assumed to equal historical diversions from 1992 through 2005. Prior to 1992, operations were clearly different with diversions
+# through Homestake Tunnel occurring throughout the year. From 1950 through 1991 the demand at Homestake Tunnel was estimated as follows:
+# Each of those years was classified as average, wet or dry based on total baseflow from April through September at the USGS gage Colorado
+# River near Kremmling (#09058000). Average, wet and dry monthly diversions were developed based on historical diversion data from 1992
+# through 2007. Wet diversions were assumed to be the average of the five wettest years, dry diversions the average of the five driest years,
+# and average diversions the average of the remaining years.
+#
+#     rfp 7/27/09 - Used 1953 to 2005 data from CSU work. Kremmling flow data missing most of the 1909 to 1952 period.
+#                   Filled pre-1953 data using standard fillpattern approach with Roaring Fk at Glenwood Springs (ID 09085000)
+#
+SetOutputPeriod(OutputStart="10/1908",OutputEnd="9/2005")
+SetOutputYearType(OutputYearType=Water)
+ReadPatternFile(PatternFile="fill2005.pat")
+374614...MONTH~StateMod~374614_CSU.stm
+FillPattern(TSList=AllTS,PatternID="09085000")
+FillHistMonthAverage(TSList=AllTS)
+WriteStateMod(TSList=AllTS,OutputFile="374614_CSUBaseline.stm",Precision=0)

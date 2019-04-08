@@ -1,0 +1,13 @@
+#  ALVA B. ADAMS TUNNEL AT EAST PORTAL NEAR ESTES PARK
+#
+#	This file was created by James Heath (heath@lrcwe.com) due to the fact that the stream gage for the Alva B. Adams Tunnel
+#	changed WDIDs in October of 1996. Creating the *.stm file with TSTool was simpler than in StateDMI.
+#
+setOutputYearType(Water)
+# ADANETCO - ADAMS TUNNEL AT EAST PORTAL-COMPUTED FLOW
+ADANETCO.DWR.Streamflow.Month~HydroBase
+# 09013000 - ALVA B. ADAMS TUNNEL AT EAST PORTAL NEAR ESTES PARK
+09013000.DWR.Streamflow.Month~HydroBase
+blend(09013000.DWR.Streamflow.Month,ADANETCO.DWR.Streamflow.Month,BlendAtEnd)
+TS 514634 = copy(TSID="09013000.DWR.Streamflow.Month",NewTSID="514634")
+writeStateMod(TSList=AllMatchingTSID,TSID="514634",OutputFile="514634.stm",OutputStart="10/1908",OutputEnd="9/2005",Precision=0)

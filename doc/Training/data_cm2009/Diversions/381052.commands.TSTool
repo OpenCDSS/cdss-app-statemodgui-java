@@ -1,0 +1,17 @@
+# DATA SOURCE: 125 381052.StateMod..month.       StateMACFT  Oct/1974 - Sep/1996 381052      CARBONDALE WTR SYS & PL
+# DESCRIPTION: TOWN OF CARBONDALE (CARBONDALE WATER SYSTEM AND PL)
+# CONVERTED FILE: COLOUPTH.DDM
+# 1992-1996 DATA WAS RECEIVED FROM THE TOWN FROM BOB MCCABE.  THE PROVIDED DATA WAS FOUND TO BE UNUSABLE.
+# 1992-1996 FILLED WITH 1991 VALUES.
+#
+#	WY 97-05 updated with HydroBase by James Heath (heath@lrcwe.com)
+#	HydroBase contains data for the updated time period designated as infrequent data and has been used where available.
+#
+setOutputPeriod(10/1950,9/2005)
+setOutputYearType(Water)
+381052.DWR.iDivTotal.Month~HydroBase
+381052.DWR.DivTotal.Month~HydroBase
+fillFromTS(381052.DWR.DivTotal.Month,381052.DWR.iDivTotal.Month,1/1950,10/1985)
+fillFromTS(381052.DWR.DivTotal.Month,381052.DWR.iDivTotal.Month,11/1986,*)
+free(TSID="381052.DWR.iDivTotal.Month")
+writeStateMod(TSList=AllTS,OutputFile="381052.stm",Precision=0)

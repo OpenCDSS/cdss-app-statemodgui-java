@@ -1,0 +1,9 @@
+# 7203961 - JERRY CREEK RES NO 1
+723961.DWR.ResMeasStorage.Day~HydroBase
+TS Alias = NewEndOfMonthTSFromDayTS(DayTSID="723961.DWR.ResMeasStorage.Day",Bracket=16)
+723962.DWR.ResMeasStorage.Day~HydroBase
+SetOutputYearType(OutputYearType=Water)
+TS Alias2 = NewEndOfMonthTSFromDayTS(DayTSID="723962.DWR.ResMeasStorage.Day",Bracket=16)
+FillInterpolate(TSList=AllTS,MaxIntervals=6)
+Add(TSID="Alias",AddTSList=AllMatchingTSID,AddTSID="Alias2",HandleMissingHow="IgnoreMissing")
+WriteStateMod(TSList=AllMatchingTSID,TSID="Alias",OutputFile="C:\CDSS\Data\cm2009\reservoirs\jerry.stm",Precision=0)

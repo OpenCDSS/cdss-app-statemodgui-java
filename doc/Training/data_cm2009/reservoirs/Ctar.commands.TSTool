@@ -1,0 +1,178 @@
+# Ctar.commands.TSTOOL
+#
+# Targets for Step 1 calibration (release to target)
+# Minimum targets set to "0", Maximum targets set to capacity or fill pattern
+#
+setOutputPeriod(10/1908,09/2006)
+setOutputYearType(Water)
+#
+# Green Mountain Reservoir
+363543...MONTH~StateMod~..\statemod\cm2009.eom
+setConstant(TSID="363543...MONTH",ConstantValue=0)
+363543...MONTH~StateMod~363543Forecast.stm
+#
+# UPPER BLUE RESERVOIR
+363570...MONTH~StateMod~..\statemod\cm2009.eom
+setConstant(TSID="363570...MONTH",ConstantValue=0)
+363570...MONTH~StateMod~..\statemod\cm2009.eom
+setConstant(TSID="363570...MONTH",MonthValues="0,0,0,2113,2113,2113,2113,1850,2113,2113,0,0",SetStart="04/1962")
+#
+# CLINTON GULCH RESERVOIR
+363575...MONTH~StateMod~..\statemod\cm2009.eom
+setConstant(TSID="363575...MONTH",ConstantValue=0)
+363575...MONTH~StateMod~..\statemod\cm2009.eom
+setConstant(TSID="363575...MONTH",ConstantValue=4300,SetStart="04/1977")
+#
+# DILLON RESERVOIR
+364512...MONTH~StateMod~..\statemod\cm2009.eom
+setConstant(TSID="364512...MONTH",ConstantValue=0)
+364512...MONTH~StateMod~..\statemod\cm2009.eom
+setConstant(TSID="364512...MONTH",ConstantValue=262200,SetStart="09/1963")
+#
+36_ARC001...MONTH~StateMod~..\statemod\cm2009.eom
+setConstant(TSID="36_ARC001...MONTH",ConstantValue=0)
+36_ARC001...MONTH~StateMod~..\statemod\cm2009.eom
+#
+# WOLCOTT RESERVOIR
+373639...MONTH~StateMod~..\statemod\cm2009.eom
+setConstant(TSID="373639...MONTH",ConstantValue=0)
+373639...MONTH~StateMod~..\statemod\cm2009.eom
+#
+# EAGLE PARK RESERVOIR
+373699...MONTH~StateMod~..\statemod\cm2009.eom
+setConstant(TSID="373699...MONTH",ConstantValue=0)
+373699...MONTH~StateMod~..\statemod\cm2009.eom
+# reservoir is currently a placeholder for future model updates
+#setConstant(TSID="373699...MONTH",ConstantValue=3148,SetStart="05/1997")
+#
+# HOMESTAKE PROJ RESERVOIR
+374516...MONTH~StateMod~..\statemod\cm2009.eom
+setConstant(TSID="374516...MONTH",ConstantValue=0)
+374516...MONTH~StateMod~..\statemod\cm2009.eom
+setConstant(TSID="374516...MONTH",ConstantValue=43092,SetStart="04/1967")
+#
+37_ARC002...MONTH~StateMod~..\statemod\cm2009.eom
+setConstant(TSID="37_ARC002...MONTH",ConstantValue=0)
+37_ARC002...MONTH~StateMod~..\statemod\cm2009.eom
+#
+# RUEDI RESERVOIR
+383713...MONTH~StateMod~..\statemod\cm2009.eom
+setConstant(TSID="383713...MONTH",ConstantValue=0)
+383713...MONTH~StateMod~383713Forecast.stm
+#
+38_ARC003...MONTH~StateMod~..\statemod\cm2009.eom
+setConstant(TSID="38_ARC003...MONTH",ConstantValue=0)
+38_ARC003...MONTH~StateMod~..\statemod\cm2009.eom
+#
+# GRASS VALLEY RESERVOIR
+393505...MONTH~StateMod~..\statemod\cm2009.eom
+setConstant(TSID="393505...MONTH",ConstantValue=0)
+393505...MONTH~StateMod~..\statemod\cm2009.eom
+setConstant(TSID="393505...MONTH",ConstantValue=5920)
+#
+# RIFLE GAP RESERVOIR
+393508...MONTH~StateMod~..\statemod\cm2009.eom
+setConstant(TSID="393508...MONTH",ConstantValue=0)
+393508...MONTH~StateMod~..\statemod\cm2009.eom
+setConstant(TSID="393508...MONTH",ConstantValue=13602,SetStart="04/1967")
+#
+39_ARC004...MONTH~StateMod~..\statemod\cm2009.eom
+setConstant(TSID="39_ARC004...MONTH",ConstantValue=0)
+39_ARC004...MONTH~StateMod~..\statemod\cm2009.eom
+#
+45_ARC005...MONTH~StateMod~..\statemod\cm2009.eom
+setConstant(TSID="45_ARC005...MONTH",ConstantValue=0)
+45_ARC005...MONTH~StateMod~..\statemod\cm2009.eom
+#
+# WOLFORD MOUNTAIN RES
+503668...MONTH~StateMod~..\statemod\cm2009.eom
+setConstant(TSID="503668...MONTH",ConstantValue=0)
+503668...MONTH~StateMod~..\statemod\cm2009.eom
+setConstant(TSID="503668...MONTH",ConstantValue=65985,SetStart="04/1995")
+#
+50_ARC006...MONTH~StateMod~..\statemod\cm2009.eom
+setConstant(TSID="50_ARC006...MONTH",ConstantValue=0)
+50_ARC006...MONTH~StateMod~..\statemod\cm2009.eom
+#
+# MEADOW CREEK RESERVOIR
+513686...MONTH~StateMod~..\statemod\cm2009.eom
+setConstant(TSID="513686...MONTH",ConstantValue=0)
+513686...MONTH~StateMod~..\statemod\cm2009.eom
+setConstant(TSID="513686...MONTH",ConstantValue=5930,SetStart="04/1956")
+#
+# CBT SHADOW MTN GRAND L
+513695...MONTH~StateMod~..\statemod\cm2009.eom
+setConstant(TSID="513695...MONTH",ConstantValue=0)
+513695...MONTH~StateMod~..\statemod\cm2009.eom
+#
+# WILLIAMS FORK RESERVOIR
+513709...MONTH~StateMod~..\statemod\cm2009.eom
+setConstant(TSID="513709...MONTH",ConstantValue=0)
+513709...MONTH~StateMod~513709Forecast.stm
+#
+# CBT WILLOW CREEK RES
+513710...MONTH~StateMod~..\statemod\cm2009.eom
+setConstant(TSID="513710...MONTH",ConstantValue=0)
+513710...MONTH~StateMod~513710Forecast.stm
+#
+# CBT GRANBY RESERVOIR
+514620...MONTH~StateMod~..\statemod\cm2009.eom
+setConstant(TSID="514620...MONTH",ConstantValue=0)
+514620...MONTH~StateMod~..\statemod\cm2009.eom
+setConstant(TSID="514620...MONTH",ConstantValue=539758,SetStart="10/1949")
+#
+51_ARC007...MONTH~StateMod~..\statemod\cm2009.eom
+setConstant(TSID="51_ARC007...MONTH",ConstantValue=0)
+51_ARC007...MONTH~StateMod~..\statemod\cm2009.eom
+#
+52_ARC008...MONTH~StateMod~..\statemod\cm2009.eom
+setConstant(TSID="52_ARC008...MONTH",ConstantValue=0)
+52_ARC008...MONTH~StateMod~..\statemod\cm2009.eom
+#
+53_ARC009...MONTH~StateMod~..\statemod\cm2009.eom
+setConstant(TSID="53_ARC009...MONTH",ConstantValue=0)
+53_ARC009...MONTH~StateMod~..\statemod\cm2009.eom
+#
+# LEON CREEK AGGREG RES - EOM required toomuch filling - set targets to capacity
+723839...MONTH~StateMod~..\statemod\cm2009.eom
+SetConstant(TSList=LastMatchingTSID,TSID="723839...MONTH",ConstantValue=0)
+723839...MONTH~StateMod~..\statemod\cm2009.eom
+setConstant(TSID="723839...MONTH",ConstantValue=2904)
+# MONUMENT AGGRES RES  - EOM required toomuch filling - set targets to capacity
+723842...MONTH~StateMod~..\statemod\cm2009.eom
+setConstant(TSID="723842...MONTH",ConstantValue=0)
+723842...MONTH~StateMod~..\statemod\cm2009.eom
+setConstant(TSID="723842...MONTH",ConstantValue=987)
+#
+# VEGA RESERVOIR
+723844...MONTH~StateMod~..\statemod\cm2009.eom
+setConstant(TSID="723844...MONTH",ConstantValue=0)
+723844...MONTH~StateMod~..\statemod\cm2009.eom
+setConstant(TSID="723844...MONTH",ConstantValue=34131,SetStart="04/1959")
+#
+# JERRY CREEK RESERVOIRS
+723961...MONTH~StateMod~..\statemod\cm2009.eom
+setConstant(TSID="723961...MONTH",ConstantValue=0)
+723961...MONTH~StateMod~..\statemod\cm2009.eom
+setConstant(TSID="723961...MONTH",ConstantValue=8623)
+#
+72_ARC010...MONTH~StateMod~..\statemod\cm2009.eom
+setConstant(TSID="72_ARC010...MONTH",ConstantValue=0)
+72_ARC010...MONTH~StateMod~..\statemod\cm2009.eom
+#
+72_ASC001...MONTH~StateMod~..\statemod\cm2009.eom
+setConstant(TSID="72_ASC001...MONTH",ConstantValue=0)
+72_ASC001...MONTH~StateMod~..\statemod\cm2009.eom
+#
+# BONHAM AGGREGATED RES
+953800...MONTH~StateMod~..\statemod\cm2009.eom
+setConstant(TSID="953800...MONTH",ConstantValue=0)
+953800...MONTH~StateMod~..\statemod\cm2009.eom
+#
+# COTTONWOOD AGGREG RES
+953801...MONTH~StateMod~..\statemod\cm2009.eom
+setConstant(TSID="953801...MONTH",ConstantValue=0)
+953801...MONTH~StateMod~..\statemod\cm2009.eom
+#
+#
+writeStateMod(TSList=AllTS,OutputFile="..\StateMod\cm2009C.tar",Precision=0)

@@ -1,0 +1,18 @@
+#       TREATED DELIVERIES FROM UTE WATER TREATMENT PLANT
+#       WY75-91 Phase II .stm file - from Ute WCD daily operating plans
+#       CY91-96 data from Ute WCD not usable
+#
+#	WY 1909-1974 and 1992-2005 filled the sum of WDIDs 950030, 721339, 72920, and 721329 by James Heath (heath@lrcwe.com)
+#
+setOutputPeriod(10/1908,9/2005)
+setOutputYearType(Water)
+setPatternFile("fill2005.pat")
+950030...MONTH~StateMod~950030.stm
+720920...MONTH~StateMod~720920.stm
+721339...MONTH~StateMod~721339.stm
+721329...MONTH~StateMod~721329.stm
+TS 950020 = copy(TSID="950030...MONTH",NewTSID="950020")
+add(TSID="950020",TSList="SpecifiedTS",AddTSID="720920...MONTH,721339...MONTH,721329...MONTH",HandleMissingHow=IgnoreMissing)
+fillPattern(TSList=AllMatchingTSID,TSID="950020",PatternID="09095500")
+fillHistMonthAverage(TSList=AllMatchingTSID,TSID="950020")
+writeStateMod(TSList=AllMatchingTSID,TSID="950020",OutputFile="950020.stm",Precision=0)

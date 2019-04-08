@@ -1,0 +1,61 @@
+The following notes describe changes that were made to the data set to
+configure it for use with the StateMod GUI.  In the future, these changes can
+be included in the basic data set prior to placement on the CDSS web site.
+
+1) Downloaded the 1/18/2010 model from the CDSS website on 2010-12-19.
+Installed the files to C:\CDSS\data\cm2009.  Also downloaded the documentation
+for the model (data set) and saved in the DocSW folder as per StateMod
+conventions.
+
+2) Created this file in DocSW.
+
+3) The basic data set as downloaded does not include GIS files needed by the
+   GUI so put those together.  One approach is to put all CDSS GIS files in
+   a generic location like C:\CDSS\GIS\Div1\*.shp, etc.  Another approach is
+   to put all GIS files needed for a data in a GIS folder parallel to other
+   model data folders.  The latter approach was taken here because a
+   self-contained StateMod data set is being distributed with the StateMod GUI.
+   Therefore, download GIS layers from http://cdss.state.co.us (go to GIS
+   products).  The layers are configured using a cm2009.gvp file
+   (GeoView Project - text map file description for StateMod GUI)
+   configuration file in the main statemod folder.
+
+* download data from CDSS website
+* configure the sm2009.gvp file
+* based on the StateMod GUI files created to indicate missing spatial data
+  (e.g., "x-gui-MissingSpatial-dds.csv", create CSV files to fill in some of
+  the missing values:
+
+  ../GIS/mf.csv - for instream flows
+  ../GIS/plans.csv - for plans
+
+4) Updated the cm2009.rsp file as follows:
+
+* Removed blanks from the end of some lines - line wrapping was ugly.
+* Added an entry for "Network" in the response file, to indicate the *.net file.
+* Added an entry for "GeographicInformation" in the response file,
+  to indicate the *.gvp file.
+* Added an entry for "StateModExecutable" in the response file, to indicate
+  the executable that should be run by the GUI.
+
+5) Updated all the other *.rsp files similar to above.
+
+6) Add "FileFormatVersion 2" comment to cm2009C.opr and cm2009H.opr - the GUI
+   works on the new format.
+
+==============================================================================
+
+Questions/comments about this dataset:
+
+1) Why do structures use 6-character WDIDs?  They should be updated
+   to 7-character WDIDs.  The network can be manually edited if necessary to
+   make this switch or a tool could be developed to do it.
+2) Need to do more work in the StateMod GUI to display irrigated lands.
+3) Map layers need standard symbols for consistency across all data sets.
+4) If there is time, will implement a CSV map layer format for aggregate
+   structures and other data not in the shapefiles.  This will round out the
+   map interface.  Note that in the big picture, adding coordinates to station
+   files could be another approach, and including lat/long is needed (can project
+   on the fly or also provide X/Y in data files).
+5) Why does the cm2009H.opr file say "examples" at the top?
+

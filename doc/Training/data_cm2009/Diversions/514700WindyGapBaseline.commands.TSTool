@@ -1,0 +1,14 @@
+#     Baseline Demands for Windy Gap
+#
+# Demands for Windy Gap (node 514700), and Adams Tunnel (Node 514643) were set equal to the demands in the Windy Gap EIS Existing Conditions Model run.
+# (recommendation from Heather Thompson as part of her CSU work)
+#
+#     rfp 7/27/09 - Filled pre-1950 data using standard fillpattern approach with Colorado R at Hot Sulphur Springs (ID 09034500)
+#
+SetOutputPeriod(OutputStart="10/1908",OutputEnd="9/2005")
+SetOutputYearType(OutputYearType=Water)
+ReadPatternFile(PatternFile="fill2005.pat")
+514700...MONTH~StateMod~514700_CSU.stm
+FillPattern(TSList=AllTS,PatternID="09034500")
+FillHistMonthAverage(TSList=AllTS)
+WriteStateMod(TSList=AllTS,OutputFile="514700_WindyGapBaseline.stm",Precision=0)

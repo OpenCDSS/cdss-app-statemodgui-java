@@ -1,0 +1,293 @@
+# GeoView project file for Colorado basin.
+
+# Main GeoView properties.
+
+[GeoView]
+
+# Main home for data
+# If a directory is not specified, the directory will be determined when the
+# GeoView project file is selected.
+#GeoDataHome = "C:\cdss\data\cm2009\gis"
+# ArcView/ArcExplorer Default...
+#SelectColor = Yellow 
+# Arc 8...
+#SelectColor = Cyan
+# All-purpose (magenta/pink)
+SelectColor = "255,120,255" 
+MaximumExtent = "140000,4313800 450000,4485000"
+# Projection for data unless otherwise indicated with data files
+Projection = "UTM,13"
+
+# Now list the layer views.  A layer view consists of specifying a data layer
+# (e.g., shapefile) and view information (e.g., symbol).  This is equivalent to
+# the ESRI "theme" concept.  The layers specified first are drawn on the bottom.
+# Start with number 1 and increase the layer number sequentially as layers are
+# added on top.
+#
+# Important properties are:
+#
+# GeoLayer - file name for layer data
+# Name - Name to show in legend
+# SkipLayerView - if true, don't display (but keep in file to maintain layer
+#			numbering)
+# AppLayerType - this is "hardcoded" in software to allow recognition in
+#			specific displays.  The value is "softcoded" here to
+#			allow flexibility.
+# AppJoinField - attribute field(s) in the GIS data that are used to link to
+#			the StateMod data.  The number of fields must match what
+#			is needed for the AppLayerType (e.g., diversions
+#			require a wd,id).
+
+[GeoLayerView 1]
+GeoLayer = ../GIS/div5_districts.shp
+Name = "Water Districts"
+# RGB 153 204 50 - green-yellow
+#Color = "0x99CC32"
+# tan
+Color = "255,240,190"
+OutlineColor = black
+ReferenceLayer = true
+AppLayerType = "BaseLayer"
+
+# The following layer is currently skipped.  It can be turned on.  Additional
+# classification/symbolization is being developed.
+[GeoLayerView 2]
+SkipLayerView = true
+GeoLayer = ../GIS/div5_irrig_2005.shp
+#Name = "Irrigated Parcels"
+Name = "Crops"
+AppLayerType = "BaseLayer"
+# Draw as single color...
+#SymbolClassification = "Single"
+# Green
+#Color = "0,255,0"
+# black
+OutlineColor = "0,0,0"
+# ---- OR draw as unique values -----------
+#SymbolClassification = "UniqueValues"
+#SymbolClassField = "wd"
+#Color = "red;blue;green;yellow;pink;cyan;orange;magenta"
+# ---- OR draw as class breaks -----------
+SymbolClassification = "ClassBreaks"
+#ColorTable  = "Custom;3;red;green;blue"
+ColorTable = "YellowToRed,10"
+#ColorTable = "BlueToCyan,10"
+#SymbolClassField = "wd"
+#SymbolClassBreaks = "20,22,24,26,30"
+# Try acres for testing
+SymbolClassField = "ACREAGE"
+SymbolClassBreaks = "1,10,20,40,100,150,200,300,400,500"
+
+[GeoLayerView 3]
+GeoLayer = ../GIS/div5_lakes.shp
+#GeoLayer = div5_lakes.shp
+Name = "Lakes"
+# - blue
+Color = "165,250,254"
+OutlineColor = "0,130,254"
+AppLayerType = "BaseLayer"
+
+[GeoLayerView 4]
+Name = "Rivers"
+GeoLayer = ../GIS/div5_rivers.shp
+#GeoLayer = div5_rivers.shp
+# RGB - blue
+Color = "0,188,253"
+AppLayerType = "BaseLayer"
+
+[GeoLayerView 5]
+GeoLayer = ../GIS/Div5ModelISF.shp
+Name = "Instream Flow Reaches"
+AppLayerType = "BaseLayer"
+Color = "magenta"
+SymbolSize = 2
+# Not joined to data yet (use termini for that)
+# Just use the reaches for display
+#AppLayerType = "InstreamFlow"
+#AppJoinField = "WDID"
+#AppJoinField = "ID"
+#LabelField = "ID_LABEL"
+#LabelFormat = "%s"
+
+[GeoLayerView 6]
+GeoLayer = ../GIS/div5_highways.shp
+Name = "Roads and Highways"
+Color = "255,0,0"
+AppLayerType = "BaseLayer"
+
+[GeoLayerView 7]
+GeoLayer = ../GIS/div5_cities.shp
+Name = "Cities and Towns"
+SymbolStyle = "Square-Filled"
+SymbolSize = 7
+Color = "red"
+LabelField = "NameUC"
+LabelPosition = RightCenter
+AppLayerType = "BaseLayer"
+
+[GeoLayerView 8]
+# Can enable for wells if desired
+SkipLayerView = true
+GeoLayer = ../GIS/div5_wells_decreed.shp
+Name = "Wells (WDID)"
+# brown
+Color = "164,134,77"
+SymbolStyle = "Square-Filled"
+SymbolSize = 7
+AppLayerType = "Well"
+AppJoinField = "ID_LABEL"
+
+[GeoLayerView 9]
+# Can enable for wells if desired
+SkipLayerView = true
+GeoLayer = ../GIS/div5_wells_other.shp
+Name = "Div & Well (Other)"
+# brown
+Color = "164,134,77"
+SymbolStyle = "Square-Filled"
+SymbolSize = 7
+AppLayerType = "DiversionWell"
+AppJoinField = "ID_LABEL"
+
+[GeoLayerView 10]
+# Can enable for wells if desired
+SkipLayerView = true
+GeoLayer = ???.shp
+Name = "Div & Well (WDID)"
+# brown
+Color = "164,134,77"
+SymbolStyle = "Square-Filled"
+SymbolSize = 7
+AppLayerType = "DiversionWell"
+AppJoinField = "ID_LABEL6"
+
+[GeoLayerView 11]
+GeoLayer = ../GIS/dds.csv
+Name = "Diversions (Aggregate/System)"
+# Green
+Color = "0,255,0"
+SymbolStyle = "Square-Filled"
+SymbolSize = 5
+AppLayerType = "Diversion"
+AppJoinField = "ID"
+#LabelField = "ID"
+
+[GeoLayerView 12]
+GeoLayer = ../GIS/div5_diversions.shp
+Name = "Diversions (WDID)"
+# green
+Color = "0,255,0"
+SymbolStyle = "Square-Filled"
+SymbolSize = 5
+AppLayerType = "Diversion"
+AppJoinField = "ID_LABEL6"
+
+[GeoLayerView 13]
+SkipLayerView = true
+GeoLayer = ?../GIS/cm2009_Reservoirs.shp?
+Name = "Reservoirs (Other)"
+# black
+Color = "black"
+SymbolStyle = "Triangle-Up-Filled"
+SymbolSize = 7
+AppLayerType = "Reservoir"
+AppJoinField = "ID_LABEL"
+
+[GeoLayerView 14]
+GeoLayer = ../GIS/div5_reservoirs.shp
+Name = "Reservoirs (WDID)"
+# black
+Color = "black"
+SymbolStyle = "Triangle-Up-Filled"
+SymbolSize = 7
+AppLayerType = "Reservoir"
+AppJoinField = "ID_LABEL6"
+
+[GeoLayerView 15]
+GeoLayer = ../GIS/ris.csv
+Name = "Stream Gages (Estimate & Other)"
+# orange
+Color = "254,167,0"
+SymbolStyle = "Circle-Filled"
+SymbolSize = 7
+AppLayerType = "Streamflow"
+AppJoinField = "ID"
+#LabelField = "ID, NAME"
+#LabelFormat = "%s, %s"
+
+[GeoLayerView 16]
+GeoLayer = ../GIS/div5_flowstations.shp
+Name = "Stream Gages (USGS, etc.)"
+# orange
+Color = "254,167,0"
+SymbolStyle = "Circle-Filled"
+SymbolSize = 7
+AppLayerType = "Streamflow"
+AppJoinField = "STATION_ID"
+#LabelField = "STATION_NA, STATION_NA"
+#LabelFormat = "%s, %s"
+
+[GeoLayerView 17]
+SkipLayerView = true
+GeoLayer = ../GIS/div4_flowstations.shp
+Name = "Stream Gages (Div4)"
+# orange
+Color = "254,167,0"
+SymbolStyle = "Circle-Filled"
+SymbolSize = 7
+AppLayerType = "Streamflow"
+AppJoinField = "STATION_ID"
+#LabelField = "STATION_NA, STATION_NA"
+#LabelFormat = "%s, %s"
+
+[GeoLayerView 18]
+GeoLayer = ../GIS/div5_evapstations.shp
+Name = "Evaporation Stations"
+# orange
+#Color = "254,167,0"
+Color = black
+SymbolStyle = "Plus"
+SymbolSize = 7
+AppLayerType = "Climate"
+AppJoinField = "STATION_ID"
+#LabelField = "STATION_NA, STATION_NA"
+#LabelFormat = "%s, %s"
+
+[GeoLayerView 19]
+GeoLayer = ../GIS/div5_precipstations.shp
+Name = "Precipitation Stations"
+# orange
+#Color = "254,167,0"
+Color = black
+SymbolStyle = "X"
+SymbolSize = 7
+AppLayerType = "Climate"
+AppJoinField = "STATION_ID"
+#LabelField = "STATION_NA, STATION_NA"
+#LabelFormat = "%s, %s"
+
+[GeoLayerView 20]
+GeoLayer = ../GIS/ISF_Termini.shp
+Name = "Instream Flow Termini"
+Color = "magenta"
+# Old CRCDSS symbol (not visible enough)
+#SymbolStyle = "InstreamFlow"
+SymbolStyle = "Diamond-Filled"
+SymbolSize = 8
+AppLayerType = "InstreamFlow"
+AppJoinField = "WDID"
+#LabelField = "ID_LABEL"
+#LabelFormat = "%s"
+
+[GeoLayerView 21]
+GeoLayer = ../GIS/pln.csv
+Projection = "Geographic"
+Name = "Plans"
+Color = gray
+SymbolStyle = "Circle-Filled"
+SymbolSize = 7
+AppLayerType = "Plan"
+AppJoinField = "ID"
+LabelField = "Name"
+LabelFormat = "%s"
+LabelField = "Name"

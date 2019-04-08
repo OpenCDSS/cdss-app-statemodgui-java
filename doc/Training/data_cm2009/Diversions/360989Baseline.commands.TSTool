@@ -1,0 +1,8 @@
+#
+#  TSTool command file to create Baseline demands per Heather Thompson recommendation as part of her CSU work
+#
+SetOutputPeriod(OutputStart="10/1908",OutputEnd="09/2005")
+SetOutputYearType(OutputYearType=Water)
+TS 360989 = NewTimeSeries(NewTSID="360989...Month",Description="MaggiePondUpperBlueMOA",InitialValue=0)
+SetConstant(TSList=LastMatchingTSID,TSID="360989",MonthValues="0,0,0,0,0,0,0,0,0,0,250,0")
+WriteStateMod(TSList=AllTS,OutputFile="360989_CSU.stm",Precision=0)

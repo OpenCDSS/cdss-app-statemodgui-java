@@ -1,0 +1,15 @@
+#  UTE WCD COON CREEK PIPELINE DIVERSIONS
+#       WY75-91 - Phase II .del file
+#       10/91-12/93 - data from RTi archives equal to 721339 Db data minus Coon Creek divns by Ute WCD
+#       1/94-9/96 filled with missing flags - data received from Ute WCD not usable
+#
+#
+#	WY 97-05 updated with HydroBase by James Heath (heath@lrcwe.com)
+#
+setOutputPeriod(10/1950,9/2005)
+setOutputYearType(Water)
+721339.DWR.iDivTotal.Month~HydroBase
+721339.DWR.DivTotal.Month~HydroBase
+add(TSID="721339.DWR.iDivTotal.Month",TSList="SpecifiedTS",AddTSID="721339.DWR.DivTotal.Month",HandleMissingHow=IgnoreMissing)
+free(TSID="721339.DWR.DivTotal.Month")
+writeStateMod(TSList=AllTS,OutputFile="721339.stm",Precision=0)

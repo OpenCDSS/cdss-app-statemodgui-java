@@ -1,0 +1,85 @@
+# Operating Rule (also called Operational Right) Summary
+#
+# The main purpose of this file is to tell the StateMod graphical user interface
+# (GUI) which operating rules should be treated as text because the GUI is
+# not completely handling the rule.  This is needed because advances in the
+# StateMod model may be ahead of the GUI or because additional software development
+# and testing is needed.  The GUI does have internal defaults for which rights are
+# supported for detailed editing; however, turning a right type off in this file
+# will override the GUI default.  Later updates to the GUI may provide more support
+# for operational rights.
+#
+# If an operating rule is turned off (no below), it will be displayed and be
+# editable in text form.  If an operating rule is on (yes below), it will be editable
+# using a form.
+#
+# This list was extracted from the OperatingRules.xls spreadsheet.
+#
+# Specify yes or no for the EditingSupported column
+#    - only "no" will change the default
+#------------------------------------------------------------------------------
+"Type","EditingSupported","Description"
+#
+# General rules
+1,yes,Reservoir to Instream Flow
+2,yes,Reserovir to Diversion or Reservoir
+3,yes,Reservoir to Carrier
+4,yes,Reservoir to a Diversion by Exchange
+5,yes,Reservoir to a Reservoir by Exchange
+6,yes,Reservoir Paper Exchange,Reservoir
+7,yes,Reservoir to a Carrier by Exchange
+8,no,Out-of-Priority Bookover,Reservoir
+9,yes,Reservoir Release to Target
+10,no,General Reservoir Replacement
+11,yes,Carrier to a Ditch or Reservoir
+12,yes,Reoperation
+13,yes,La Plata Compact (Index Flow)
+14,yes,Carrier with Constrained Demand
+15,yes,Interruptable Supply
+#
+# Generic rules originally developed for the Rio Grande
+16,yes,Direct Flow Storage,Diversion Water Right
+17,yes,Rio Grande Compact - Rio Grande
+18,yes,Rio Grande Compact - Conejos
+# Under development...
+19,no,Split Channel Operations
+#
+# San Juan Rules - seems to work but may not need to be supported
+20,yes,San Juan Recovery
+#
+# Generic rules originally developed for the Rio Grande
+21,yes,Wells with Sprinkler Use
+22,yes,Soil Moisture Use
+#
+# Generic Rules originally developed for the South Platte
+23,yes,Downstream Call
+24,no,River Flow Exchange
+25,no,River Flow Bypass
+# Not currently used
+26,no,Not Currently Used
+27,no,Plan or Reservoir Reuse - River
+28,no,Plan or Reservoir Reuse - Exchange
+29,yes,Plan - Spill,Reuse or Acct Plan
+# Not curently used - replaced by 48/49
+30,no,Reservoir Re Diversion
+31,yes,Carrier to a Ditch or Reservoir with Reuse Exchange
+32,yes,Plan to a Ditch or Reservoir with Reuse Direct
+33,yes,Plan to a Ditch or Reservoir with Reuse Exchange
+34,yes,Reservoir Bookover with Reuse
+35,yes,Import with Reuse
+36,yes,Seasonal (Meadow) Right
+37,yes,Augmentation Well
+38,yes,Out of Priority Diversion
+39,yes,Alternate Point
+# Under development - do not support in editor
+40,no,South Platte Compact
+41,yes,Reservoir Storage with Special Limits
+42,yes,Plan Reset
+43,yes,In-Priority Supply
+44,yes,Recharge Well
+45,yes,Carrier with Loss
+# Too many questions about the documentation and no examples in data...
+46,no,Multiple Ownership
+47,yes,Administrative Plan Limits
+48,yes,Plan or Reservoir Reuse to a Plan - River
+49,yes,Plan or Reservoir Reuse to a Plan - Exchange

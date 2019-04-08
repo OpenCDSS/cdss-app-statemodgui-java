@@ -1,0 +1,180 @@
+#     GVP.Disaggregation.commands.TSTool
+#
+#     This commands file disaggregates total Roller Dam diversions from various sources into
+#     individual components that receive water from the Roller Dam. The disaggregation is done
+#     in the following order of structures - GVP, OMID Irr, OMID Pump, USA Power Summer and then
+#     Winter. The analysis is based on previously analyses developed by USBR, which was summarized
+#     in the Phase IIIa documentation, Appendix C.8.4.2
+#
+#     The historical diversion values are disaggregated based on monthly %ages and then limited to
+#     monthly maxima that are generally based on water right amounts. Any water from the original 
+#     disaggregation that is in excess of the monthly maxima is added to the next node analyzed.
+#     This approach results in unassigned water from the original total Roller Dam diversions in
+#     Dec-Feb of many years.
+#     This excess water is added to the last node analyzed - USA Power Winter - to maintain
+#     consistency with the original total Roller Dam diversions.
+#
+#
+SetInputPeriod(InputStart="10/1908",InputEnd="09/2008")
+# Read total diversions at Roller Dam, which includes missing data through September 1925 and all of USGS water year 1942
+ReadStateMod(InputFile="720646.stm")
+# Read total diversions at Roller Dam from HydroBase to fill missing data from previous stm file with recent data records
+720646.DWR.DivTotal.Month~HydroBase
+# Combine data from both sources
+FillFromTS(TSList=AllMatchingTSID,TSID="720646...MONTH",IndependentTSList=AllMatchingTSID,IndependentTSID="720646.DWR.DivTotal.Month")
+# Remove HydroBase data from further analyses
+Free(TSList=AllMatchingTSID,TSID="720646.DWR.DivTotal.Month")
+#
+# Develop GVP Irrigation (950001) time series and GVP Irr factors based on USBR analysis
+# Develop monthly maximum diversions equal to 850 cfs
+# Multiply the total diversions by the GVP Irr factors, and then limit them to the monthly maxima
+TS 950001 = Copy(TSID="720646...MONTH",NewTSID="950001...Month")
+TS 950001factors = Copy(TSID="720646...MONTH",NewTSID="950001factors...Month")
+SetConstant(TSList=LastMatchingTSID,TSID="950001factors",MonthValues="0,0,2.5,43.5,50.5,52.9,58.4,56.5,47.1,46.3,42.2,0")
+Multiply(950001,950001factors)
+Scale(TSList=LastMatchingTSID,TSID="950001",ScaleValue=0.01,NewUnits="ACFT")
+# Calculate amount of (GVP * GVP Irr factors) in excess of monthly maximum diversion
+TS 950001leftover = Copy(TSID="950001",NewTSID="950001leftover...Month")
+TS 950001max = Copy(TSID="720646...MONTH",NewTSID="950001max...Month")
+SetConstant(TSList=LastMatchingTSID,TSID="950001max",MonthValues="52265.2,47207.3,52265.2,50579.3,52265.2,50579.3,52265.2,52265.2,50579.3,52265.2,50579.3,52265.2")
+SetToMin("950001","950001max")
+Subtract(TSID="950001leftover",SubtractTSList=LastMatchingTSID,SubtractTSID="950001",HandleMissingHow="IgnoreMissing")
+TS ZeroValues = Copy(TSID="720646...MONTH",NewTSID="ZeroValues...Month")
+SetConstant(TSList=LastMatchingTSID,TSID="ZeroValues",MonthValues="0,0,0,0,0,0,0,0,0,0,0,0")
+SetMax("950001leftover","ZeroValues")
+# Reset missing data
+SetConstant(TSList=LastMatchingTSID,TSID="950001",ConstantValue=-999,SetStart="01/1908",SetEnd="09/1925")
+SetConstant(TSList=LastMatchingTSID,TSID="950001",ConstantValue=-999,SetStart="10/1941",SetEnd="09/1942")
+#
+# Develop OMID Irrigation (720813) time series and OMID Irr factors based on USBR analysis
+# Develop monthly maximum diversions equal to 188.2 cfs
+# Multiply the total diversions by the OMID Irr factors, and then limit them to the monthly maxima
+TS 720813 = Copy(TSID="720646...MONTH",NewTSID="720813...Month")
+TS 720813factors = Copy(TSID="720646...MONTH",NewTSID="720813factors...Month")
+SetConstant(TSList=LastMatchingTSID,TSID="720813factors",MonthValues="0,0,0.4,8.7,10.4,10.9,11.2,11.3,9.8,7.3,0,0")
+Multiply(720813,720813factors)
+Scale(TSList=LastMatchingTSID,TSID="720813",ScaleValue=0.01,NewUnits="ACFT")
+# Add excess from GVP Irr calculation to OMID Irrigation demand
+Add(TSID="720813",AddTSList=SpecifiedTSID,AddTSID="950001leftover",HandleMissingHow="IgnoreMissing")
+# Calculate amount of (GVP * OMID Irr factors) in excess of monthly maximum diversion
+TS 720813leftover = Copy(TSID="720813",NewTSID="720813leftover...Month")
+TS 720813max = Copy(TSID="720646...MONTH",NewTSID="720813max...Month")
+SetConstant(TSList=LastMatchingTSID,TSID="720813max",MonthValues="11572.1,10452.3,11572.1,11198.8,11572.1,11198.8,11572.1,11572.1,11198.8,11572.1,11198.8,11572.1")
+SetToMin("720813","720813max")
+Subtract(TSID="720813leftover",SubtractTSList=LastMatchingTSID,SubtractTSID="720813",HandleMissingHow="IgnoreMissing")
+SetMax("950001leftover","ZeroValues")
+SetConstant(TSList=LastMatchingTSID,TSID="720813",ConstantValue=-999,SetStart="01/1908",SetEnd="09/1925")
+SetConstant(TSList=LastMatchingTSID,TSID="720813",ConstantValue=-999,SetStart="10/1941",SetEnd="09/1942")
+#
+# Develop OMID Pump (950004) time series and OMID Pump factors based on USBR analysis
+# Develop monthly maximum diversions equal to 272 cfs
+# Multiply the total diversions by the OMID Pump factors, and then limit them to the monthly maxima
+TS 950004 = Copy(TSID="720646...MONTH",NewTSID="950004...Month")
+TS 950004factors = Copy(TSID="720646...MONTH",NewTSID="950004factors...Month")
+SetConstant(TSList=LastMatchingTSID,TSID="950004factors",MonthValues="0,0,0.8,14.8,17.5,17.3,14.7,15.2,17.3,13.2,0,0")
+Multiply(950004,950004factors)
+Scale(TSList=LastMatchingTSID,TSID="950004",ScaleValue=0.01,NewUnits="ACFT")
+# Add excess from OMID Irr calculation to OMID Pump demand
+Add(TSID="950004",AddTSList=SpecifiedTSID,AddTSID="720813leftover",HandleMissingHow="IgnoreMissing")
+# Calculate amount of (GVP * OMID Pump factors) in excess of monthly maximum diversion
+TS 950004leftover = Copy(TSID="950004",NewTSID="950004leftover...Month")
+TS 950004max = Copy(TSID="720646...MONTH",NewTSID="950004max...Month")
+SetConstant(TSList=LastMatchingTSID,TSID="950004max",MonthValues="16724.9,15106.3,16724.9,16185.4,16724.9,16185.4,16724.9,16724.9,16185.4,16724.9,16185.4,16724.9")
+SetToMin("950004","950004max")
+Subtract(TSID="950004leftover",SubtractTSList=LastMatchingTSID,SubtractTSID="950004",HandleMissingHow="IgnoreMissing")
+SetMax("720813leftover","ZeroValues")
+# Reset missing data
+SetConstant(TSList=LastMatchingTSID,TSID="950004",ConstantValue=-999,SetStart="01/1908",SetEnd="09/1925")
+SetConstant(TSList=LastMatchingTSID,TSID="950004",ConstantValue=-999,SetStart="10/1941",SetEnd="09/1942")
+#
+# Develop USA Power Summer (950008) and USA Power Winter (950007) time series and USA Power factors based on USBR analysis
+# Develop monthly maximum diversions equal to 800 cfs (Note - Baseline demands for Summer will be limited to 400 cfs stipulation)
+#      rfp 7/27/09 USA Power Winter historical diversions not limited (see note at top of commands file).
+# Multiply the total diversions by the USA Power factors, and then limit them to the monthly maxima
+TS 950008 = Copy(TSID="720646...MONTH",NewTSID="950008...Month")
+TS 950007 = Copy(TSID="720646...MONTH",NewTSID="950007...Month")
+TS 950008factors = Copy(TSID="720646...MONTH",NewTSID="950008factors...Month")
+TS 950007factors = Copy(TSID="720646...MONTH",NewTSID="950007factors...Month")
+SetConstant(TSList=LastMatchingTSID,TSID="950008factors",MonthValues="0,0,0,33,21.6,18.9,15.7,17,25.8,33.2,0,0")
+SetConstant(TSList=LastMatchingTSID,TSID="950007factors",MonthValues="100,100,96.3,0,0,0,0,0,0,0,57.8,100")
+Multiply(950008,950008factors)
+Multiply(950007,950007factors)
+Scale(TSList=LastMatchingTSID,TSID="950008",ScaleValue=0.01,NewUnits="ACFT")
+Scale(TSList=LastMatchingTSID,TSID="950007",ScaleValue=0.01,NewUnits="ACFT")
+# Add excess from OMID Pump calculation to USA Power demands
+Add(TSID="950008",AddTSList=SpecifiedTSID,AddTSID="950004leftover",HandleMissingHow="IgnoreMissing")
+Add(TSID="950007",AddTSList=SpecifiedTSID,AddTSID="950004leftover",HandleMissingHow="IgnoreMissing")
+# Zero out summer demands for Winter Power node demands and vice versa for Summer Power node demand
+TS 950008factors2 = Copy(TSID="720646...MONTH",NewTSID="950008factors2...Month")
+TS 950007factors2 = Copy(TSID="720646...MONTH",NewTSID="950007factors2...Month")
+SetConstant(TSList=LastMatchingTSID,TSID="950008factors2",MonthValues="0,0,0,1,1,1,1,1,1,1,0,0")
+SetConstant(TSList=LastMatchingTSID,TSID="950007factors2",MonthValues="1,1,1,0,0,0,0,0,0,0,1,1")
+Multiply(950008,950008factors2)
+Scale(TSList=LastMatchingTSID,TSID="950008",ScaleValue=1,NewUnits="ACFT")
+Multiply(950007,950007factors2)
+Scale(TSList=LastMatchingTSID,TSID="950007",ScaleValue=1,NewUnits="ACFT")
+# Develop total USA Power diversions for use in cm2005.rsp baseflow calculations
+TS 950002 = Copy(TSID="950008",NewTSID="950002...Month")
+Add(TSID="950002",AddTSList=SpecifiedTSID,AddTSID="950007",HandleMissingHow="IgnoreMissing")
+# 
+# Calculate amount of (GVP * USA Power factors) in excess of monthly maximum diversion - The final excess is this value minus limited Power diversions
+TS 950008leftover = Copy(TSID="950008",NewTSID="950008leftover...Month")
+TS 950007leftover = Copy(TSID="950007",NewTSID="950007leftover...Month")
+TS USAPowerHistmax = Copy(TSID="720646...MONTH",NewTSID="USAPowerHistmax...Month")
+SetConstant(TSList=LastMatchingTSID,TSID="USAPowerHistmax",MonthValues="49190.8,44430.4,49190.8,47604,49190.8,47604,49190.8,49190.8,47604,49190.8,47604,49190.8")
+SetToMin("950008","USAPowerHistmax")
+# Next command kept in as placeholder in case future modelers want to see effects of limiting Winter power diversion
+# Previous command does not affect Summer Power demand since it is never greater than 800 cfs (as of 7/27/09 - rfp)
+# SetToMin(TSID="950007",IndependentTSList=SpecifiedTSID,IndependentTSID="USAPowerHistmax")
+# 
+# Previous analysis (Phase 2? Phase 3a?) indicates historical diversions should be zeroed out before 1933 start date
+# Disaggregation of GVP historical diversions above (rfp 7/27/09) includes about 80,000 ac-ft/yr
+# for over first few years with GVP diversions (1926-1932) that is assigned above to USA Power demands. Therefore, maintain this excess
+# Maintain these excess diversions to USA Power before 1932 so that sum of parts = Total GVP diversion.
+# Then zero out historical diversions prior to start of record (1926).
+SetConstant(TSList=LastMatchingTSID,TSID="950008",ConstantValue=0,SetStart="01/1908",SetEnd="12/1925")
+SetConstant(TSList=LastMatchingTSID,TSID="950007",ConstantValue=0,SetStart="01/1908",SetEnd="12/1925")
+SetConstant(TSList=LastMatchingTSID,TSID="950002",ConstantValue=0,SetStart="01/1908",SetEnd="12/1925")
+# Reset missing data
+SetConstant(TSList=LastMatchingTSID,TSID="950007",ConstantValue=-999,SetStart="10/1941",SetEnd="09/1942")
+SetConstant(TSList=LastMatchingTSID,TSID="950008",ConstantValue=-999,SetStart="10/1941",SetEnd="09/1942")
+SetConstant(TSList=LastMatchingTSID,TSID="950002",ConstantValue=-999,SetStart="10/1941",SetEnd="09/1942")
+#
+# Calculate Winter Demand excess and Summer Demand excess
+Subtract(TSID="950008leftover",SubtractTSList=LastMatchingTSID,SubtractTSID="950008",HandleMissingHow="IgnoreMissing")
+Subtract(TSID="950007leftover",SubtractTSList=LastMatchingTSID,SubtractTSID="950007",HandleMissingHow="IgnoreMissing")
+SetMax("950008leftover","ZeroValues")
+SetMax("950007leftover","ZeroValues")
+TS TotalGVPunaccounted = Copy(TSID="950008leftover",NewTSID="TotalGVPunaccounted...Month")
+Add(TSID="TotalGVPunaccounted",AddTSList=SpecifiedTSID,AddTSID="950007leftover",HandleMissingHow="IgnoreMissing")
+#
+# Free temporary variables
+Free(TSList=LastMatchingTSID,TSID="ZeroValues")
+Free(TSList=AllMatchingTSID,TSID="*max")
+Free(TSList=AllMatchingTSID,TSID="*factors*")
+Free(TSList=AllMatchingTSID,TSID="*leftover")
+#
+# Sum the diversion components not including (DisaggregationSum) and
+# including the diversion leftover after the USA Power calculations
+# for comparison to total Roller Dam diversions
+TS DisaggregationSum = Copy(TSID="950001",NewTSID="DisaggregationSum...Month")
+Add(TSID="DisaggregationSum",AddTSList=SpecifiedTSID,AddTSID="720813,950004,950008,950007",HandleMissingHow="IgnoreMissing")
+TS DisaggregationTotalSum = Copy(TSID="DisaggregationSum",NewTSID="DisaggregationTotalSum...Month")
+Add(TSID="DisaggregationTotalSum",AddTSList=SpecifiedTSID,AddTSID="TotalGVPunaccounted",HandleMissingHow="IgnoreMissing")
+#
+# Write historical diversions files of total Power diversions. These values will be limited for ultimate use in .ddh file
+SetOutputYearType(OutputYearType=Water)
+WriteStateMod(TSList=AllMatchingTSID,TSID="950008",OutputFile="950008complete.stm",Precision=0)
+WriteStateMod(TSList=AllMatchingTSID,TSID="950007",OutputFile="950007complete.stm",Precision=0)
+WriteStateMod(TSList=AllMatchingTSID,TSID="950002",OutputFile="950002complete.stm",Precision=0)
+# Write historical diversions files for use in .ddh file
+WriteStateMod(TSList=AllMatchingTSID,TSID="950001",OutputFile="950001.stm",Precision=0)
+WriteStateMod(TSList=AllMatchingTSID,TSID="720813",OutputFile="720813.stm",Precision=0)
+WriteStateMod(TSList=AllMatchingTSID,TSID="950004",OutputFile="950004.stm",Precision=0)
+# Zero out USA Power Winter and Summer demands before 1997 and Total USA Power demands after 1996 to stay consistent with .ddh approach previously developed.
+SetConstant(TSList=LastMatchingTSID,TSID="950007",ConstantValue=0,SetStart="01/1908",SetEnd="09/1996")
+SetConstant(TSList=LastMatchingTSID,TSID="950008",ConstantValue=0,SetStart="01/1908",SetEnd="09/1996")
+SetConstant(TSList=LastMatchingTSID,TSID="950002",ConstantValue=0,SetStart="10/1996")
+WriteStateMod(TSList=AllMatchingTSID,TSID="950008",OutputFile="950008.stm",Precision=0)
+WriteStateMod(TSList=AllMatchingTSID,TSID="950007",OutputFile="950007.stm",Precision=0)
+WriteStateMod(TSList=AllMatchingTSID,TSID="950002",OutputFile="950002.stm",Precision=0)

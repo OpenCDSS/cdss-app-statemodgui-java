@@ -1,0 +1,20 @@
+SetOutputPeriod(OutputStart="10/1908",OutputEnd="9/2006")
+SetOutputYearType(OutputYearType=Water)
+#
+# Data provided by Denver Water from their Base285 run, used in the Moffat EIS model. Represents Existing Use, Existing
+# System for DW'a modeling study period. To be used for 1947 through 1991 of the Baseline scenario.
+#
+364684...MONTH~StateMod~DW_RobertsBase285.stm
+#
+# Fill last ten years with historical Roberts Tunnel data
+#
+SetInputPeriod(InputStart="10/1995",InputEnd="09/2005")
+09050590.DWR.Streamflow.Month~HydroBase
+FillFromTS(TSList=AllMatchingTSID,TSID="364684...MONTH",IndependentTSList=AllMatchingTSID,IndependentTSID="09050590.DWR.Streamflow.Month~HydroBase")
+#
+# Fill pre-1947 and gap from 1992-1996
+#
+ReadPatternFile(PatternFile="fill2006.pat")
+FillPattern(TSList=AllMatchingTSID,TSID="364684...MONTH",PatternID="09037500")
+FillHistMonthAverage(TSList=AllTS)
+WriteStateMod(TSList=AllMatchingTSID,TSID="364684...MONTH",OutputFile="364684_baseline.stm",Precision=0)

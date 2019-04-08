@@ -1,0 +1,527 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<metadata>
+	<idinfo>
+		<citation>
+			<citeinfo>
+				<origin>State of Colorado Division of Water Resources</origin>
+				<pubdate>20100812</pubdate>
+				<title>CDSS Reservoirs, Division 5, Database version 20100812</title>
+				<geoform Sync="TRUE">vector digital data</geoform>
+				<pubinfo></pubinfo>
+				<onlink>&lt;http://cdss.state.co.us&gt;</onlink>
+				<lworkcit>
+					<citeinfo>
+						<pubinfo></pubinfo>
+					</citeinfo>
+				</lworkcit>
+				<ftname Sync="TRUE">div5_reservoirs</ftname>
+			</citeinfo>
+		</citation>
+		<descript>
+			<abstract>CDSS Reservoirs, Division 5, Database version 20100812</abstract>
+			<purpose>Spatial integration of CDSS</purpose>
+			<langdata Sync="TRUE">en</langdata>
+		</descript>
+		<timeperd>
+			<timeinfo>
+				<sngdate>
+					<caldate>20100812</caldate>
+				</sngdate>
+			</timeinfo>
+			<current>publication date</current>
+		</timeperd>
+		<status>
+			<progress>Complete</progress>
+			<update>Irregular</update>
+		</status>
+		<spdom>
+			<bounding>
+				<westbc Sync="TRUE">-109.152969</westbc>
+				<eastbc Sync="TRUE">-105.684543</eastbc>
+				<northbc Sync="TRUE">40.976786</northbc>
+				<southbc Sync="TRUE">38.946473</southbc>
+			</bounding>
+			<lboundng>
+				<leftbc Sync="TRUE">150179.000000</leftbc>
+				<rightbc Sync="TRUE">440735.900000</rightbc>
+				<bottombc Sync="TRUE">4318589.000000</bottombc>
+				<topbc Sync="TRUE">4536419.000000</topbc>
+			</lboundng>
+		</spdom>
+		<keywords>
+			<theme>
+				<themekt>None</themekt>
+				<themekey>reservoirs</themekey>
+			</theme>
+			<place>
+				<placekt>None</placekt>
+				<placekey>Division 5</placekey>
+				<placekey>Colorado</placekey>
+				<placekey>Colorado River</placekey>
+			</place>
+		</keywords>
+		<accconst>None</accconst>
+		<useconst>None</useconst>
+		<ptcontac>
+			<cntinfo>
+				<cntperp>
+					<cntper>Ray Bennett</cntper>
+					<cntorg>Division of Water Resources</cntorg>
+				</cntperp>
+				<cntpos>Project Manager</cntpos>
+				<cntaddr>
+					<addrtype>mailing and physical address</addrtype>
+					<address>Natural Resources Department</address>
+					<address>1313 Sherman Street, Room 818</address>
+					<city>Denver</city>
+					<state>CO</state>
+					<postal>80203</postal>
+					<country>USA</country>
+				</cntaddr>
+				<cntvoice>303-866-3581</cntvoice>
+				<cntfax>303-866-3589</cntfax>
+				<cntemail>ray.bennett@state.co.us</cntemail>
+			</cntinfo>
+		</ptcontac>
+		<native Sync="TRUE">Microsoft Windows XP Version 5.1 (Build 2600) Service Pack 3; ESRI ArcCatalog 9.3.1.3500</native>
+		<natvform Sync="TRUE">Shapefile</natvform>
+	</idinfo>
+	<dataqual>
+		<attracc></attracc>
+		<lineage>
+			<srcinfo>
+				<srccite>
+					<citeinfo>
+						<origin>Riverside Technology, Inc.</origin>
+						<pubdate>20011024</pubdate>
+						<title>HydroBase database version 20100812</title>
+						<onlink>cdss.state.co.us</onlink>
+					</citeinfo>
+				</srccite>
+				<srctime>
+					<timeinfo>
+						<sngdate>
+							<caldate>20011024</caldate>
+						</sngdate>
+					</timeinfo>
+					<srccurr>publication date</srccurr>
+				</srctime>
+			</srcinfo>
+			<procstep>
+				<procdesc>
+Data were created from relational data in HydroBase database version 20100812 using a database query that generates a table of the reservoir records in the correct division. The coordinates of the points are stored in the table's fields and are used to create a point shapefile.
+Note that this shapefile was created by selecting the HydroBase records whose "DIV" field shows the reservoir as belonging to this division. The points' locations are derived from the coordinates stored in the table and as such, may fall outside the boundaries of this division.
+</procdesc>
+				<procdate>20011024</procdate>
+				<proccont>
+					<cntinfo>
+						<cntorgp>
+							<cntorg>Riverside Technology, Inc.</cntorg>
+							<cntper>David Askov</cntper>
+						</cntorgp>
+						<cntpos>GIS Analyst</cntpos>
+						<cntaddr>
+							<addrtype>mailing and physical address</addrtype>
+							<address>2290 East Prospect Road, Suite 1</address>
+							<city>Fort Collins</city>
+							<state>CO</state>
+							<postal>80525</postal>
+							<country>USA</country>
+						</cntaddr>
+						<cntvoice>970-484-7573</cntvoice>
+						<cntfax>970-484-7593</cntfax>
+						<cntemail>dca@riverside.com</cntemail>
+					</cntinfo>
+				</proccont>
+			</procstep>
+			<procstep>
+				<procdesc Sync="TRUE">Metadata imported.</procdesc>
+				<srcused Sync="TRUE">C:\Documents and Settings\jsp\Desktop\XML20100812\xml20100812\div5_reservoirs.shp.xml</srcused>
+				<date Sync="TRUE">20070813</date>
+				<time Sync="TRUE">13005600</time>
+			</procstep>
+		</lineage>
+	</dataqual>
+	<spdoinfo>
+		<direct Sync="TRUE">Vector</direct>
+		<ptvctinf>
+			<sdtsterm Name="div5_reservoirs">
+				<sdtstype Sync="TRUE">Entity point</sdtstype>
+				<ptvctcnt Sync="TRUE">3399</ptvctcnt>
+			</sdtsterm>
+			<esriterm Name="div5_reservoirs">
+				<efeatyp Sync="TRUE">Simple</efeatyp>
+				<efeageom Sync="TRUE">Point</efeageom>
+				<esritopo Sync="TRUE">FALSE</esritopo>
+				<efeacnt Sync="TRUE">3399</efeacnt>
+				<spindex Sync="TRUE">FALSE</spindex>
+				<linrefer Sync="TRUE">FALSE</linrefer>
+			</esriterm>
+		</ptvctinf>
+	</spdoinfo>
+	<spref>
+		<horizsys>
+			<planar>
+				<planci>
+					<plance Sync="TRUE">coordinate pair</plance>
+					<coordrep>
+						<absres Sync="TRUE">0.000000</absres>
+						<ordres Sync="TRUE">0.000000</ordres>
+					</coordrep>
+					<plandu Sync="TRUE">meters</plandu>
+				</planci>
+				<gridsys><gridsysn Sync="TRUE">Universal Transverse Mercator</gridsysn><utm><utmzone Sync="TRUE">13</utmzone><transmer><sfctrmer Sync="TRUE">0.999600</sfctrmer><longcm Sync="TRUE">-105.000000</longcm><latprjo Sync="TRUE">0.000000</latprjo><feast Sync="TRUE">500000.000000</feast><fnorth Sync="TRUE">0.000000</fnorth></transmer></utm></gridsys></planar>
+			<geodetic>
+				<horizdn Sync="TRUE">North American Datum of 1983</horizdn>
+				<ellips Sync="TRUE">Geodetic Reference System 80</ellips>
+				<semiaxis Sync="TRUE">6378137.000000</semiaxis>
+				<denflat Sync="TRUE">298.257222</denflat>
+			</geodetic>
+			<cordsysn>
+				<geogcsn Sync="TRUE">GCS_North_American_1983</geogcsn>
+				<projcsn Sync="TRUE">NAD_1983_UTM_Zone_13N</projcsn>
+			</cordsysn>
+		</horizsys>
+	</spref>
+	<eainfo>
+		<detailed Name="div5_reservoirs">
+			<enttyp>
+				<enttypl Sync="TRUE">div5_reservoirs</enttypl>
+				<enttypt Sync="TRUE">Feature Class</enttypt>
+				<enttypc Sync="TRUE">3399</enttypc>
+			</enttyp>
+			<attr>
+				<attrlabl Sync="TRUE">FID</attrlabl>
+				<attalias Sync="TRUE">FID</attalias>
+				<attrtype Sync="TRUE">OID</attrtype>
+				<attwidth Sync="TRUE">4</attwidth>
+				<atprecis Sync="TRUE">0</atprecis>
+				<attscale Sync="TRUE">0</attscale>
+				<attrdef Sync="TRUE">Internal feature number.</attrdef>
+				<attrdefs Sync="TRUE">ESRI</attrdefs>
+				<attrdomv>
+					<udom Sync="TRUE">Sequential unique whole numbers that are automatically generated.</udom>
+				</attrdomv>
+			</attr>
+			<attr>
+				<attrlabl Sync="TRUE">Shape</attrlabl>
+				<attalias Sync="TRUE">Shape</attalias>
+				<attrtype Sync="TRUE">Geometry</attrtype>
+				<attwidth Sync="TRUE">0</attwidth>
+				<atprecis Sync="TRUE">0</atprecis>
+				<attscale Sync="TRUE">0</attscale>
+				<attrdef Sync="TRUE">Feature geometry.</attrdef>
+				<attrdefs Sync="TRUE">ESRI</attrdefs>
+				<attrdomv>
+					<udom Sync="TRUE">Coordinates defining the features.</udom>
+				</attrdomv>
+			</attr>
+			<attr>
+				<attrlabl Sync="TRUE">HTMLLINK</attrlabl>
+				<attalias Sync="TRUE">HTMLLINK</attalias>
+				<attrtype Sync="TRUE">String</attrtype>
+				<attwidth Sync="TRUE">66</attwidth>
+				<attrdef>URL linking reservoir to CDSS data retrieval web pages.</attrdef>
+			</attr>
+			<attr>
+				<attrlabl Sync="TRUE">WD</attrlabl>
+				<attalias Sync="TRUE">WD</attalias>
+				<attrtype Sync="TRUE">Number</attrtype>
+				<attwidth Sync="TRUE">4</attwidth>
+				<attrdef>SEO water district.</attrdef>
+			</attr>
+			<attr>
+				<attrlabl Sync="TRUE">ID</attrlabl>
+				<attalias Sync="TRUE">ID</attalias>
+				<attrtype Sync="TRUE">Number</attrtype>
+				<attwidth Sync="TRUE">9</attwidth>
+				<attrdef>SEO structure identifier.</attrdef>
+			</attr>
+			<attr>
+				<attrlabl Sync="TRUE">NAME</attrlabl>
+				<attalias Sync="TRUE">NAME</attalias>
+				<attrtype Sync="TRUE">String</attrtype>
+				<attwidth Sync="TRUE">40</attwidth>
+				<attrdef>Structure Name.</attrdef>
+			</attr>
+			<attr>
+				<attrlabl Sync="TRUE">CIU</attrlabl>
+				<attalias Sync="TRUE">CIU</attalias>
+				<attrtype Sync="TRUE">String</attrtype>
+				<attwidth Sync="TRUE">1</attwidth>
+				<attrdef>Current in-use code.
+A Active structure with contemporary diversion records
+B Structure abandoned by the court
+C Conditional structure
+D Duplicate, inactive ID
+F Structure used as FROM number - located in another District
+H Historical structure only - no longer exists or has records, but has historical data
+I Inactive structures which physically exist, but no diversion records are maintained
+N Non-existent structure with no contemporary or historical records
+U Active structures but diversion records are not maintained</attrdef>
+			</attr>
+			<attr>
+				<attrlabl Sync="TRUE">DIV</attrlabl>
+				<attalias Sync="TRUE">DIV</attalias>
+				<attrtype Sync="TRUE">Number</attrtype>
+				<attwidth Sync="TRUE">4</attwidth>
+				<attrdef>SEO water division.</attrdef>
+			</attr>
+			<attr>
+				<attrlabl Sync="TRUE">COUNTY</attrlabl>
+				<attalias Sync="TRUE">COUNTY</attalias>
+				<attrtype Sync="TRUE">String</attrtype>
+				<attwidth Sync="TRUE">20</attwidth>
+				<attrdef>County name.</attrdef>
+			</attr>
+			<attr>
+				<attrlabl Sync="TRUE">ST</attrlabl>
+				<attalias Sync="TRUE">ST</attalias>
+				<attrtype Sync="TRUE">String</attrtype>
+				<attwidth Sync="TRUE">2</attwidth>
+				<attrdef>State.</attrdef>
+			</attr>
+			<attr>
+				<attrlabl Sync="TRUE">WATER_SRC</attrlabl>
+				<attalias Sync="TRUE">WATER_SRC</attalias>
+				<attrtype Sync="TRUE">String</attrtype>
+				<attwidth Sync="TRUE">24</attwidth>
+				<attrdef>Water source.</attrdef>
+			</attr>
+			<attr>
+				<attrlabl Sync="TRUE">UTM_X</attrlabl>
+				<attalias Sync="TRUE">UTM_X</attalias>
+				<attrtype Sync="TRUE">String</attrtype>
+				<attwidth Sync="TRUE">19</attwidth>
+				<attrdef>The x (Easting) component of the Universal Transverse Mercator system.</attrdef>
+			</attr>
+			<attr>
+				<attrlabl Sync="TRUE">UTM_Y</attrlabl>
+				<attalias Sync="TRUE">UTM_Y</attalias>
+				<attrtype Sync="TRUE">String</attrtype>
+				<attwidth Sync="TRUE">19</attwidth>
+				<attrdef>The y (Northing) component of the Universal Transverse Mercator system. </attrdef>
+			</attr>
+			<attr>
+				<attrlabl Sync="TRUE">DATUM</attrlabl>
+				<attalias Sync="TRUE">DATUM</attalias>
+				<attrtype Sync="TRUE">String</attrtype>
+				<attwidth Sync="TRUE">5</attwidth>
+				<attrdef>Universal Transverse Mercator system datum.</attrdef>
+			</attr>
+			<attr>
+				<attrlabl Sync="TRUE">ZONE</attrlabl>
+				<attalias Sync="TRUE">ZONE</attalias>
+				<attrtype Sync="TRUE">String</attrtype>
+				<attwidth Sync="TRUE">2</attwidth>
+				<attrdef>Universal Transverse Mercator system zone.</attrdef>
+			</attr>
+			<attr>
+				<attrlabl Sync="TRUE">LATDECDEG</attrlabl>
+				<attalias Sync="TRUE">LATDECDEG</attalias>
+				<attrtype Sync="TRUE">String</attrtype>
+				<attwidth Sync="TRUE">19</attwidth>
+				<attrdef>Latitude (decimal degrees). </attrdef>
+			</attr>
+			<attr>
+				<attrlabl Sync="TRUE">LONGDECDEG</attrlabl>
+				<attalias Sync="TRUE">LONGDECDEG</attalias>
+				<attrtype Sync="TRUE">String</attrtype>
+				<attwidth Sync="TRUE">19</attwidth>
+				<attrdef>Longitude (decimal degrees).</attrdef>
+			</attr>
+			<attr>
+				<attrlabl Sync="TRUE">ACCURACY</attrlabl>
+				<attalias Sync="TRUE">ACCURACY</attalias>
+				<attrtype Sync="TRUE">String</attrtype>
+				<attwidth Sync="TRUE">50</attwidth>
+				<attrdef>Accuracy of utm coordinate determination.</attrdef>
+			</attr>
+			<attr>
+				<attrlabl Sync="TRUE">ID_LABEL6</attrlabl>
+				<attalias Sync="TRUE">ID_LABEL6</attalias>
+				<attrtype Sync="TRUE">String</attrtype>
+				<attwidth Sync="TRUE">254</attwidth>
+				<attrdef>A 6 character fix formatted string combining the WD and ID of the structure for labeling purposes.</attrdef></attr>
+			<attr>
+				<attrlabl Sync="TRUE">ID_LABEL7</attrlabl>
+				<attalias Sync="TRUE">ID_LABEL7</attalias>
+				<attrtype Sync="TRUE">String</attrtype>
+				<attwidth Sync="TRUE">254</attwidth>
+				<attrdef>A 7 character fix formatted string combining the WD and ID of the structure for labeling purposes.</attrdef></attr>
+		</detailed>
+	</eainfo>
+	<distinfo>
+		<distrib>
+			<cntinfo>
+				<cntperp>
+					<cntper>Ray Bennett</cntper>
+					<cntorg>Division of Water Resources</cntorg>
+				</cntperp>
+				<cntpos>Project Manager</cntpos>
+				<cntaddr>
+					<addrtype>mailing and physical address</addrtype>
+					<address>Natural Resources Department</address>
+					<address>1313 Sherman Street, Room 818</address>
+					<city>Denver</city>
+					<state>CO</state>
+					<postal>80203</postal>
+					<country>USA</country>
+				</cntaddr>
+				<cntvoice>303-866-3581</cntvoice>
+				<cntfax>303-866-3589</cntfax>
+				<cntemail>ray.bennett@state.co.us</cntemail>
+			</cntinfo>
+		</distrib>
+		<resdesc>ArcView Shapefiles</resdesc>
+		<stdorder>
+			<digform>
+				<digtinfo>
+					<formname>ArcView 3.x</formname>
+					<transize>0.017</transize>
+					<dssize Sync="TRUE">0.091</dssize>
+				</digtinfo>
+				<digtopt>
+					<offoptn>
+						<recfmt>Compatibility_Information ArcView 3.x</recfmt>
+					</offoptn>
+				</digtopt>
+			</digform>
+		</stdorder>
+	</distinfo>
+	<metainfo>
+		<metd Sync="TRUE">20100812</metd>
+		<metc>
+			<cntinfo>
+				<cntperp>
+					<cntper>Ray Bennett</cntper>
+					<cntorg>Division of Water Resources</cntorg>
+				</cntperp>
+				<cntpos>Project Manager</cntpos>
+				<cntaddr>
+					<addrtype>mailing and physical address</addrtype>
+					<address>Natural Resources Department</address>
+					<address>1313 Sherman Street, Room 818</address>
+					<city>Denver</city>
+					<state>CO</state>
+					<postal>80203</postal>
+					<country>USA</country>
+				</cntaddr>
+				<cntvoice>303-866-3581</cntvoice>
+				<cntfax>303-866-3589</cntfax>
+				<cntemail>ray.bennett@state.co.us</cntemail>
+			</cntinfo>
+		</metc>
+		<metstdn Sync="TRUE">FGDC Content Standards for Digital Geospatial Metadata</metstdn>
+		<metstdv Sync="TRUE">FGDC-STD-001-1998</metstdv>
+		<mettc Sync="TRUE">local time</mettc>
+		<metextns>
+			<onlink>&lt;http://www.esri.com/metadata/esriprof80.html&gt;</onlink>
+			<metprof>ESRI Metadata Profile</metprof>
+		</metextns>
+		<metextns>
+			<onlink>&lt;http://www.esri.com/metadata/esriprof80.html&gt;</onlink>
+			<metprof>ESRI Metadata Profile</metprof>
+		</metextns>
+		<metextns>
+			<onlink>&lt;http://www.esri.com/metadata/esriprof80.html&gt;</onlink>
+			<metprof>ESRI Metadata Profile</metprof>
+		</metextns>
+		<metextns>
+			<onlink>&lt;http://www.esri.com/metadata/esriprof80.html&gt;</onlink>
+			<metprof>ESRI Metadata Profile</metprof>
+		</metextns>
+		<metextns>
+			<onlink>&lt;http://www.esri.com/metadata/esriprof80.html&gt;</onlink>
+			<metprof>
+ESRI Metadata Profile
+</metprof>
+		</metextns>
+		<langmeta Sync="TRUE">en</langmeta>
+		<metextns><onlink Sync="TRUE">http://www.esri.com/metadata/esriprof80.html</onlink><metprof Sync="TRUE">ESRI Metadata Profile</metprof></metextns></metainfo>
+	<Esri>
+		<CreaDate>20070813</CreaDate>
+		<CreaTime>13005600</CreaTime>
+		<SyncOnce>FALSE</SyncOnce>
+		<ModDate>20100812</ModDate>
+		<ModTime>13505200</ModTime>
+		<MetaID>{6BEE3B95-15FB-4DAD-9888-620B47CF8ECA}</MetaID>
+		<SyncDate>20100812</SyncDate>
+		<SyncTime>13505200</SyncTime>
+		<DataProperties><lineage></lineage></DataProperties></Esri>
+	<mdDateSt Sync="TRUE">20100812</mdDateSt>
+	<dataIdInfo>
+		<envirDesc Sync="TRUE">Microsoft Windows XP Version 5.1 (Build 2600) Service Pack 3; ESRI ArcCatalog 9.3.1.3500</envirDesc>
+		<dataLang>
+			<languageCode Sync="TRUE" value="en"></languageCode>
+		</dataLang>
+		<idCitation>
+			<resTitle Sync="TRUE">div5_reservoirs</resTitle>
+			<presForm>
+				<PresFormCd Sync="TRUE" value="005"></PresFormCd>
+			</presForm>
+		</idCitation>
+		<spatRpType>
+			<SpatRepTypCd Sync="TRUE" value="001"></SpatRepTypCd>
+		</spatRpType>
+		<dataExt>
+			<geoEle>
+				<GeoBndBox esriExtentType="native">
+					<westBL Sync="TRUE">150179</westBL>
+					<eastBL Sync="TRUE">440735.9</eastBL>
+					<northBL Sync="TRUE">4536419</northBL>
+					<southBL Sync="TRUE">4318589</southBL>
+					<exTypeCode Sync="TRUE">1</exTypeCode>
+				</GeoBndBox>
+			</geoEle>
+		</dataExt>
+		<geoBox esriExtentType="decdegrees">
+			<westBL Sync="TRUE">-109.152969</westBL>
+			<eastBL Sync="TRUE">-105.684543</eastBL>
+			<northBL Sync="TRUE">40.976786</northBL>
+			<southBL Sync="TRUE">38.946473</southBL>
+			<exTypeCode Sync="TRUE">1</exTypeCode>
+		</geoBox>
+	</dataIdInfo>
+	<mdLang>
+		<languageCode Sync="TRUE" value="en"></languageCode>
+	</mdLang>
+	<mdStanName Sync="TRUE">ISO 19115 Geographic Information - Metadata</mdStanName>
+	<mdStanVer Sync="TRUE">DIS_ESRI1.0</mdStanVer>
+	<mdChar>
+		<CharSetCd Sync="TRUE" value="004"></CharSetCd>
+	</mdChar>
+	<mdHrLv>
+		<ScopeCd Sync="TRUE" value="005"></ScopeCd>
+	</mdHrLv>
+	<mdHrLvName Sync="TRUE">dataset</mdHrLvName>
+	<distInfo>
+		<distributor>
+			<distorTran>
+				<onLineSrc>
+					<orDesc Sync="TRUE">002</orDesc>
+					<linkage Sync="TRUE">file://\\CWCBDENGIS2PC\C$\cdss\shp\div5_reservoirs.shp</linkage>
+					<protocol Sync="TRUE">Local Area Network</protocol>
+				</onLineSrc>
+				<transSize Sync="TRUE">0.091</transSize>
+			</distorTran>
+			<distorFormat>
+				<formatName Sync="TRUE">Shapefile</formatName>
+			</distorFormat>
+		</distributor>
+	</distInfo>
+	<refSysInfo>
+		<RefSystem>
+			<refSysID>
+				<identCode Sync="TRUE">NAD_1983_UTM_Zone_13N</identCode>
+			</refSysID>
+		</RefSystem>
+	</refSysInfo>
+	<spatRepInfo>
+		<VectSpatRep>
+			<topLvl>
+				<TopoLevCd Sync="TRUE" value="001"></TopoLevCd>
+			</topLvl>
+			<geometObjs Name="div5_reservoirs"><geoObjTyp><GeoObjTypCd Sync="TRUE" value="004"></GeoObjTypCd></geoObjTyp><geoObjCnt Sync="TRUE">3399</geoObjCnt></geometObjs></VectSpatRep>
+	</spatRepInfo>
+</metadata>

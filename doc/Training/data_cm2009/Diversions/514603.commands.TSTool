@@ -1,0 +1,18 @@
+# GUMLICK TUNNEL
+#   DW data - 40-74, 92-96
+#   Phase II .stm file - WY 75-91
+#
+#	WY 97-05 filled by James Heath (heath@lrcwe.com) data from HydroBase under same conditions as the xbd.commands.TSTool file.
+#	this was done to keep consistancy within the different datasets. This transbasin diversion is added into the Williams Fork
+#	River near Leal gage (09036000) in the determination of daily pattern gages. The only difference in the calculations is
+#	here the time period is in months whereas the pattern gage calculations are in days.
+#
+setOutputPeriod(10/1950,9/2005)
+setOutputYearType(Water)
+514603.DWR.DivTotal.Month~HydroBase
+APGTUNCO.DWR.Streamflow.Month~HydroBase
+fillFromTS(APGTUNCO.DWR.Streamflow.Month,514603.DWR.DivTotal.Month,*,*)
+free(TSID="514603.DWR.DivTotal.Month")
+TS 514603 = copy(TSID="APGTUNCO.DWR.Streamflow.Month",NewTSID="514603")
+#  Output file used in Fraser.commands.TSTool
+writeStateMod(TSList=AllMatchingTSID,TSID="514603",OutputFile="514603.stm",Precision=0)

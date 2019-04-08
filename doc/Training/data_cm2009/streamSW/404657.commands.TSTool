@@ -1,0 +1,13 @@
+SetOutputYearType(OutputYearType=Water)
+SetOutputPeriod(OutputStart="10/1908",OutputEnd="9/2006")
+# 404657 - DIVIDE CR HL FEEDER D
+404657.DWR.DivTotal.Month~HydroBase
+# 450576 - DIVIDE CREEK HIGHLINE D
+450576.DWR.DivClass-S:1 F:4657 U:1 T:.Month~HydroBase
+# 450576 - DIVIDE CREEK HIGHLINE D
+450576.DWR.DivClass-S:4 F:4657 U:1 T:.Month~HydroBase
+FillFromTS(TSList=LastMatchingTSID,TSID="404657.DWR.DivTotal.Month",IndependentTSList=AllMatchingTSID,IndependentTSID="450576.DWR.DivClass-S:1 F:4657 U:1 T:.Month")
+FillFromTS(TSList=LastMatchingTSID,TSID="404657.DWR.DivTotal.Month",IndependentTSList=LastMatchingTSID,IndependentTSID="450576.DWR.DivClass-S:4 F:4657 U:1 T:.Month")
+Free(TSList=LastMatchingTSID,TSID="450576.DWR.DivClass-S:1 F:4657 U:1 T:.Month")
+Free(TSList=LastMatchingTSID,TSID="450576.DWR.DivClass-S:4 F:4657 U:1 T:.Month")
+WriteStateMod(TSList=AllTS,OutputFile="404657.stm",Precision=0)

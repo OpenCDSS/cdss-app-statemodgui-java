@@ -1,0 +1,12 @@
+SetOutputPeriod(OutputStart="10/1908",OutputEnd="9/2006")
+SetOutputYearType(OutputYearType=Water)
+ReadPatternFile(PatternFile="fill2006.pat")
+950030...MONTH~StateMod~950030.stm
+720920...MONTH~StateMod~720920.stm
+721339...MONTH~StateMod~721339.stm
+721329...MONTH~StateMod~721329.stm
+TS 950020 = Copy(TSID="950030...MONTH",NewTSID="950020...MONTH")
+Add(TSID="950020",AddTSList=SpecifiedTSID,AddTSID="720920...MONTH,721339...MONTH,721329...MONTH",HandleMissingHow="IgnoreMissing")
+FillPattern(TSList=AllMatchingTSID,TSID="950020",PatternID="09095500")
+FillHistMonthAverage(TSList=AllMatchingTSID,TSID="950020")
+WriteStateMod(TSList=AllMatchingTSID,TSID="950020",OutputFile="950020.stm",Precision=0)

@@ -1,0 +1,102 @@
+# This file was created by James Heath (heath@lrcwe.com) on 4/14/2006 to generate diversion data for the tributary
+# feeders to the Moffat Tunnel. This data had to be generated because it was not yet available from Denver and will
+# not be ready in calendar year 2006. Data from 1991 through 1996 had been generated in previous Upper Colorado
+# River modeling efforts and was not altered. Extension of the generated diversions from 1996 through 2005 was conducted
+# under the following guidelines:
+#
+#	1. Gage data for the MOFFAT WATER TUNNEL AT E (09022500) and AUGUST P. GUMLICK TUNNEL (APGTUNCO) are used
+#          as a known for calculations.
+#	2. Order of operations was provided by Mike Lluelen at Denver Water and is
+#		1. Jim Creek Diversions (510639)
+#		2. Vasquez Creek Diversions (511310)
+#		3. St. Louis Creek Diversions (511309)
+#		4. Ranch Creek Diversions (511269)
+#		5. Gumlick Tunnel - Williams Fork Diversions (514603)
+#		6. Englewood/Hamilton Creek Diversions (510728)
+#		7. Meadow Creek Reservoir (513686)
+#	3. The remaining demand at the Moffat Tunnel should be met through operating rules to pull
+#	   water from Meadow Creek Reservoir. All other operating rules should be turned off and demand
+#	   driven at individual diversion points by historic diversions and estimated diversions from this file.
+#	   (Operation of deliveries from Meadow Creek Reservoir to Englewood/Hamilton Creek remains on)
+#	4. The output file generated in this command file should be used only until data is available from
+#	   Denver Water and then replaced with actual data.
+#
+#
+SetInputPeriod(InputStart="10/1908",InputEnd="9/2006")
+#
+# Fill Jim Creek from Moffat using linear regression
+#   If <0, reduce Jim Creek estimated flows
+#   Subtract Jim Creek flows from Moffat flows - move on
+514655...MONTH~StateMod~514655.stm
+510639...MONTH~StateMod~510639.stm
+FillRegression(TSID="510639...MONTH",IndependentTSID="514655...MONTH",Transformation=None)
+TS TempMoff = Copy(TSID="514655...MONTH",NewTSID="TempMoff...Month")
+Subtract(TSID="TempMoff",SubtractTSList=SpecifiedTSID,SubtractTSID="510639...MONTH",HandleMissingHow="IgnoreMissing")
+TS negMoff = Copy(TSID="TempMoff",NewTSID="negMoff...Month")
+ReplaceValue(TSList=AllMatchingTSID,TSID="negMoff",MinValue=0,MaxValue=1000000,NewValue=0)
+Add(TSID="510639...MONTH",AddTSList=AllMatchingTSID,AddTSID="negMoff",HandleMissingHow="IgnoreMissing")
+Free(TSList=AllMatchingTSID,TSID="negMoff")
+Free(TSList=AllMatchingTSID,TSID="TempMoff")
+Subtract(TSID="514655...MONTH",SubtractTSList=SpecifiedTSID,SubtractTSID="510639...MONTH",HandleMissingHow="IgnoreMissing")
+#  Fill next flow
+511310...MONTH~StateMod~511310.stm
+FillRegression(TSID="511310...MONTH",IndependentTSID="514655...MONTH",NumberOfEquations=MonthlyEquations,Transformation=None)
+TS TempMoff = Copy(TSID="514655...MONTH",NewTSID="TempMoff...Month")
+Subtract(TSID="TempMoff",SubtractTSList=SpecifiedTSID,SubtractTSID="511310...MONTH",HandleMissingHow="IgnoreMissing")
+TS negMoff = Copy(TSID="TempMoff",NewTSID="negMoff...Month")
+ReplaceValue(TSList=AllMatchingTSID,TSID="negMoff",MinValue=0,MaxValue=1000000,NewValue=0)
+Add(TSID="511310...MONTH",AddTSList=AllMatchingTSID,AddTSID="negMoff",HandleMissingHow="IgnoreMissing")
+Free(TSList=AllMatchingTSID,TSID="negMoff")
+Free(TSList=AllMatchingTSID,TSID="TempMoff")
+Subtract(TSID="514655...MONTH",SubtractTSList=SpecifiedTSID,SubtractTSID="511310...MONTH",HandleMissingHow="IgnoreMissing")
+#
+511309...MONTH~StateMod~511309.stm
+FillRegression(TSID="511309...MONTH",IndependentTSID="514655...MONTH",NumberOfEquations=MonthlyEquations,Transformation=None)
+TS TempMoff = Copy(TSID="514655...MONTH",NewTSID="TempMoff...Month")
+Subtract(TSID="TempMoff",SubtractTSList=SpecifiedTSID,SubtractTSID="511309...MONTH",HandleMissingHow="IgnoreMissing")
+TS negMoff = Copy(TSID="TempMoff",NewTSID="negMoff...Month")
+ReplaceValue(TSList=AllMatchingTSID,TSID="negMoff",MinValue=0,MaxValue=1000000,NewValue=0)
+Add(TSID="511309...MONTH",AddTSList=AllMatchingTSID,AddTSID="negMoff",HandleMissingHow="IgnoreMissing")
+Free(TSList=AllMatchingTSID,TSID="negMoff")
+Free(TSList=AllMatchingTSID,TSID="TempMoff")
+Subtract(TSID="514655...MONTH",SubtractTSList=SpecifiedTSID,SubtractTSID="511309...MONTH",HandleMissingHow="IgnoreMissing")
+#
+511269...MONTH~StateMod~511269.stm
+FillRegression(TSID="511269...MONTH",IndependentTSID="514655...MONTH",NumberOfEquations=MonthlyEquations,Transformation=None)
+TS TempMoff = Copy(TSID="514655...MONTH",NewTSID="TempMoff...Month")
+Subtract(TSID="TempMoff",SubtractTSList=SpecifiedTSID,SubtractTSID="511269...MONTH",HandleMissingHow="IgnoreMissing")
+TS negMoff = Copy(TSID="TempMoff",NewTSID="negMoff...Month")
+ReplaceValue(TSList=AllMatchingTSID,TSID="negMoff",MinValue=0,MaxValue=1000000,NewValue=0)
+Add(TSID="511269...MONTH",AddTSList=AllMatchingTSID,AddTSID="negMoff",HandleMissingHow="IgnoreMissing")
+Free(TSList=AllMatchingTSID,TSID="negMoff")
+Free(TSList=AllMatchingTSID,TSID="TempMoff")
+Subtract(TSID="514655...MONTH",SubtractTSList=SpecifiedTSID,SubtractTSID="511269...MONTH",HandleMissingHow="IgnoreMissing")
+#
+514603...MONTH~StateMod~514603.stm
+FillRegression(TSID="514603...MONTH",IndependentTSID="514655...MONTH",NumberOfEquations=MonthlyEquations,Transformation=None)
+TS TempMoff = Copy(TSID="514655...MONTH",NewTSID="TempMoff...Month")
+Subtract(TSID="TempMoff",SubtractTSList=SpecifiedTSID,SubtractTSID="514603...MONTH",HandleMissingHow="IgnoreMissing")
+TS negMoff = Copy(TSID="TempMoff",NewTSID="negMoff...Month")
+ReplaceValue(TSList=AllMatchingTSID,TSID="negMoff",MinValue=0,MaxValue=1000000,NewValue=0)
+Add(TSID="514603...MONTH",AddTSList=AllMatchingTSID,AddTSID="negMoff",HandleMissingHow="IgnoreMissing")
+Free(TSList=AllMatchingTSID,TSID="negMoff")
+Free(TSList=AllMatchingTSID,TSID="TempMoff")
+Subtract(TSID="514655...MONTH",SubtractTSList=SpecifiedTSID,SubtractTSID="514603...MONTH",HandleMissingHow="IgnoreMissing")
+#
+510728...MONTH~StateMod~510728.stm
+FillRegression(TSID="510728...MONTH",IndependentTSID="514655...MONTH",NumberOfEquations=MonthlyEquations,Transformation=None)
+TS TempMoff = Copy(TSID="514655...MONTH",NewTSID="TempMoff...Month")
+Subtract(TSID="TempMoff",SubtractTSList=SpecifiedTSID,SubtractTSID="510728...MONTH",HandleMissingHow="IgnoreMissing")
+TS negMoff = Copy(TSID="TempMoff",NewTSID="negMoff...Month")
+ReplaceValue(TSList=AllMatchingTSID,TSID="negMoff",MinValue=0,MaxValue=1000000,NewValue=0)
+Add(TSID="510728...MONTH",AddTSList=AllMatchingTSID,AddTSID="negMoff",HandleMissingHow="IgnoreMissing")
+ReplaceValue(TSList=AllMatchingTSID,TSID="510728...MONTH",MinValue=-998,MaxValue=0,NewValue=0)
+Free(TSList=AllMatchingTSID,TSID="negMoff")
+Free(TSList=AllMatchingTSID,TSID="TempMoff")
+Subtract(TSID="514655...MONTH",SubtractTSList=SpecifiedTSID,SubtractTSID="510728...MONTH",HandleMissingHow="IgnoreMissing")
+# Set Moffat from Meadow Creek to "0" before Reservoir came on-line
+SetConstant(TSList=AllMatchingTSID,TSID="514655...MONTH",ConstantValue=0,SetEnd="03/1956")
+#
+SetOutputPeriod(OutputStart="10/1908",OutputEnd="9/2006")
+SetOutputYearType(OutputYearType=Water)
+WriteStateMod(TSList=AllTS,OutputFile="Fraser.stm")

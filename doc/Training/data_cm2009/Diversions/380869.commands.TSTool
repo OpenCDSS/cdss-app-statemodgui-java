@@ -1,0 +1,28 @@
+# DATA SOURCE: 101 380869.StateMod..month.       StateMACFT  Oct/1974 - Sep/1996 380869      MIDLAND FLUME DITCH
+# DESCRIPTION: TOWN OF ASPEN (MIDLAND FLUME DITCH)
+# CONVERTED FILE: COLOUPTH.DDM
+# DATA EXTENDED THROUGH 1996 WITH CONSTANT MONTHLY VALUES.  DATA HAS NOT CHANGED OVER YEARS ACCORDING TO KERRY SUNDEEN - ASPEN CONSULTANT
+#
+#
+#	WY 97-05 updated with HydroBase  by James Heath (heath@lrcwe.com)
+#	HydroBase contains what appears to be a complete data set for the updated time period even though the data
+#	is designated as infrequent data. Structure ID 380854's diversions were recorded within this structure
+#	from 11/1998 through 10/2002 but diversion comments sound like the water was not taken through this structure.
+#	Therefore the diversions for 380854 were filled and then removed from this structure's diversion records.
+#
+setOutputPeriod(10/1950,9/2005)
+setOutputYearType(Water)
+setPatternFile("fill2005.pat")
+380854.DWR.DivTotal.Month~HydroBase
+fillUsingDiversionComments(TSID="380854.DWR.DivTotal.Month",RecalcLimits=True)
+380869.DWR.iDivTotal.Month~HydroBase
+fillUsingDiversionComments(TSID="380869.DWR.iDivTotal.Month",RecalcLimits=True)
+fillPattern(TSList=AllTS,PatternID="09085000")
+fillHistMonthAverage(TSList=AllTS)
+TS copysubtract = copy(TSID="380869.DWR.iDivTotal.Month",NewTSID="123456")
+subtract(TSID="copysubtract",TSList="SpecifiedTS",SubtractTSID="380854.DWR.DivTotal.Month",HandleMissingHow=IgnoreMissing)
+setFromTS(380869.DWR.iDivTotal.Month,copysubtract,11/1998,10/2002,TransferData=ByDateTime)
+replaceValue(380869.DWR.iDivTotal.Month,-99999,0,0,11/1998,10/2002)
+free(TSID="copysubtract")
+free(TSID="380854.DWR.DivTotal.Month")
+writeStateMod(TSList=AllTS,OutputFile="360989.stm",Precision=0)

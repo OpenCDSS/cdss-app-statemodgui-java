@@ -1,0 +1,32 @@
+# ifm.commands.StateDMI
+#
+SetInputPeriod(InputStart="10/1908",InputEnd="9/2006")
+# Set the Shoshone instream flow demand to zero in Baseline simulation
+530584...MONTH~StateMod~..\Diversions\530584.stm
+TS 950500 = Copy(TSID="530584...MONTH",NewTSID="950500...MONTH")
+SetConstant(TSList=LastMatchingTSID,TSID="950500",ConstantValue=0)
+Free(TSList=LastMatchingTSID,TSID="530584...MONTH")
+Scale(TSList=LastMatchingTSID,TSID="950500",ScaleValue=DaysInMonthInverse,NewUnits="AF/D")
+ConvertDataUnits(TSList=LastMatchingTSID,TSID="950500",NewUnits="CFS")
+952002...MONTH~StateMod~952002_baseline.stm
+954620...MONTH~StateMod~wgcolof.ifm
+# sets based on gaged flows at the COLORADO RIVER NEAR GRANBY (09019500) gage
+SetConstant(TSList=LastMatchingTSID,TSID="954620...MONTH",MonthValues="20,20,20,20,75,75,75,40,20,20,20,20",SetStart="10/1996",SetEnd="9/2005")
+SetConstant(TSList=LastMatchingTSID,TSID="954620...MONTH",MonthValues="20,20,20,20,56,56,56,30,20,20,20,20",SetStart="1/2001",SetEnd="12/2001")
+SetConstant(TSList=LastMatchingTSID,TSID="954620...MONTH",MonthValues="20,20,20,20,53,53,53,28,20,20,20,20",SetStart="1/2002",SetEnd="12/2002")
+SetConstant(TSList=LastMatchingTSID,TSID="954620...MONTH",MonthValues="20,20,20,20,53,53,53,28,20,20,20,20",SetStart="1/2004",SetEnd="12/2004")
+SetConstant(TSList=LastMatchingTSID,TSID="954620...MONTH",MonthValues="20,20,20,20,53,53,53,28,20,20,20,20",SetStart="1/2005",SetEnd="12/2006")
+SetOutputYearType(OutputYearType=Water)
+WriteStateMod(TSList=AllTS,OutputFile="..\StateMod\cm2009b.ifm",Precision=0)
+#
+# Use Shoshone's historic demand as the historic stream flow, limited to senior right - 1250 cfs
+530584...MONTH~StateMod~..\Diversions\530584.stm
+SetConstant(TSList=LastMatchingTSID,TSID="950500",MonthValues="0,0,0,-999,-999,-999,-999,-999,-999,-999,0,0")
+FillFromTS(TSList=LastMatchingTSID,TSID="950500",IndependentTSList=LastMatchingTSID,IndependentTSID="530584...MONTH")
+Free(TSList=LastMatchingTSID,TSID="530584...MONTH")
+Scale(TSList=LastMatchingTSID,TSID="950500",ScaleValue=DaysInMonthInverse,NewUnits="AF/D")
+ConvertDataUnits(TSList=LastMatchingTSID,TSID="950500",NewUnits="CFS")
+ReplaceValue(TSList=LastMatchingTSID,TSID="950500",MinValue=1250,MaxValue=2000,NewValue=1250)
+SetConstant(TSList=LastMatchingTSID,TSID="952002...MONTH",ConstantValue=0,SetEnd="9/1996")
+SetConstant(TSList=LastMatchingTSID,TSID="954620...MONTH",ConstantValue=0,SetEnd="8/1949")
+WriteStateMod(TSList=AllTS,OutputFile="..\StateMod\cm2009.ifm",Precision=0)

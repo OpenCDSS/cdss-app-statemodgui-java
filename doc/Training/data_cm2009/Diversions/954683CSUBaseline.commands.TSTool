@@ -1,0 +1,22 @@
+#     Baseline Demands for Con Hoosier system
+#
+# Since the Continental Hoosier System is a core component of Springs Utilities’ water supply system and diversions
+# are typically limited by the physical water supply, the demand placed at the Hoosier Tunnel was set equal to historical
+# tunnel diversions from 1953 through 2005. October demands were set to 2,100 AF to make sure that the reservoir was
+# emptied except for the 250 AF by the end of October every year. Prior to the project coming on-line in 1953, the demand
+# at Hoosier Tunnel was estimated as follows. Each of those years was classified as average, wet or dry based on total
+# baseflow from April through September at the USGS gage Colorado River near Kremmling (#09058000). Average, wet and dry
+# monthly diversions were developed based on the historical diversion data. Wet diversions were assumed to be the average
+# of the five wettest years, dry diversions the average of the five driest years, and average diversions the average of the remaining years.
+# (recommendation by Heather Thompson as part of her CSU work)
+#
+#     rfp 7/27/09 - Used 1953 data from CSU work. Kremmling flow data missing most of the 1909 to 1952 period.
+#                   Filled pre-1953 data using standard fillpattern approach with Colorado R at Hot Sulphur Springs (ID 09034500)
+#
+SetOutputPeriod(OutputStart="10/1908",OutputEnd="9/2005")
+SetOutputYearType(OutputYearType=Water)
+ReadPatternFile(PatternFile="fill2005.pat")
+954683...MONTH~StateMod~954683_CSU.stm
+FillPattern(TSList=AllTS,PatternID="09034500")
+FillHistMonthAverage(TSList=AllTS)
+WriteStateMod(TSList=AllTS,OutputFile="954683_CSUBaseline.stm",Precision=0)

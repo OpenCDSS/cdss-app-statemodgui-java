@@ -1,0 +1,15 @@
+# DATA SOURCE: 362 720816.StateMod..month.       StateMACFT  Oct/1974 - Sep/1996 720816      PALISADE_TOWN_PIPELINE
+# DESCRIPTION: PALISADE TOWN PIPELINE (720816) (TREATED PLANT FLOWS)
+# CONVERTED FILE: COLOUPTH.DDM
+#
+#	WY 97-05 updated with HydroBase by James Heath (heath@lrcwe.com)
+#	From the diversion comments and records it appears that WDID 720815 has become the diversion point
+#	of choice for Palisade on Rapid Creek and therefore the diversions for the two structures have been added.
+#
+setOutputPeriod(10/1950,9/2005)
+setOutputYearType(Water)
+720816.DWR.DivTotal.Month~HydroBase
+720815.DWR.DivTotal.Month~HydroBase
+add(TSID="720816.DWR.DivTotal.Month",TSList="SpecifiedTS",AddTSID="720815.DWR.DivTotal.Month",HandleMissingHow=IgnoreMissing)
+free(TSID="720815.DWR.DivTotal.Month")
+writeStateMod(TSList=AllTS,OutputFile="720816.stm",Precision=0)

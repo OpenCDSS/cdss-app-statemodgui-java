@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Build file for StateMod GUI - this build file is similar to StateDMI -->
+<project name="StateModGUI" default="compile" basedir="../">
+    
+    <import file="../../rtibuild/common-build.xml"/>
+	<import file="../../rtibuild/common-doc.xml"/>
+    <import file="../../rtibuild/common-installer.xml"/>
+	
+	<!-- TODO SAM 2012-04-01 remove commented values once tested - these are set in product.properties -->
+    <!-- property name="nsis.dir" value="installer/CDSS"/ -->
+    <property name="nsis.file" value="StateModGUI.nsi"/>
+    <!-- property name="license.file" value="installer/CDSS/License.txt"/ -->
+	<!-- icon is relative to dist directory, since launch4j xml is created there-->
+    <property name="product.icon" value="externals/CDSS/graphics/waterMark.ico"/>
+    
+    <target name="-pre-installer" depends="-clean-logs"/>
+    
+    <target name="-clean-logs" description="clean log directories before installer">
+        <delete dir="${install.dir}/logs" includes="*"/>
+    </target>
+	
+    <target name="nsi" description="nsi" depends="-init">
+        <nsisinstaller nsi="${nsis.file}"/>
+    </target>
+	
+	<!-- Create the StateMod GUI PDF user manual -->
+	<target name="createUserManual"
+	 description="Merges PDF documentation into doc/dist folder" >
+		<property name="filelist" location="doc/UserManual/merge_PDF/fileList.txt" />
+		<property name="pdfsrc.dir" location="doc/UserManual/Word" />
+		<property name="pdf_file" location="doc/UserManual/dist/StateModGUI.pdf" />
+		<antcall target="mergePDF" inheritall="true"></antcall>
+	</target>
+    
+    <!-- this is called after standard-local-install and allows common resources to be copied in -->
+    <target name="-install-local" depends="-standard-exe">
+        <copy todir="${install.dir}/bin" file="scripts/StateModGUI.bat"/>
+        <copy todir="${install.dir}/bin" file="resources/StateModBin/StateMod-13.00.00.exe"/>
+    	<copy todir="${install.dir}/bin" file="resources/StateModBin/SmDelta.exe"/>
+    	<copy todir="${install.dir}/bin" file="resources/StateModBin/SmNewRsp.exe"/>
+    	<copy todir="${install.dir}/bin" file="installer/CDSS/StateModGUI.l4j.ini"/>
+        <copy verbose="yes" todir="${install.dir}/system" file="resources/CDSS_system/DATAUNIT"/>
+    	<!-- TODO SAM 2012-04-01 Why is the file getting copied as the license before the following step? -->
+        <copy verbose="yes" overwrite="yes" todir="${install.dir}/system" file="resources/CDSS_System/StateModGUI.cfg"/>
+    	<copy verbose="yes" todir="${install.dir}/system" file="resources/CDSS_System/OperatingRules.xls"/>
+    	<copy verbose="yes" todir="${install.dir}/system" file="resources/CDSS_System/OperatingRules.csv"/>
+    	<mkdir dir="${install.dir}/logs"/>
+    	<mkdir dir="${install.dir}/doc/UserManual"/>
+        <copy todir="${install.dir}/doc/UserManual" file="doc/UserManual/dist/StateModGUI.pdf"/>
+    	<!-- StateMod documentation - for now only what is used by StateModGUI -->
+    	<copy todir="${install.dir}/doc/UserManual" file="resources/StateModDoc/StateMod.pdf"/>
+    	<copy todir="${install.dir}/doc/UserManual" file="resources/StateModDoc/StateMod-OperationalRights.pdf"/>
+    	<!-- StateMod utility programs -->
+        <copy todir="${install.dir}/doc/UserManual" file="resources/StateModDoc/SmNewRsp/SmNewRsp.pdf"/>
+    	<!-- Example StateMod data set with training materials -->
+    	<mkdir dir="${install.dir}/doc/Training"/>
+    	<!-- Example StateMod data set with training materials -->
+    	<!-- Training slideshows under doc/Training -->
+    	<!-- If this becomes onerous, put in a separate target so it can be run like the PDF build -->
+    	<!-- Omit big files that can be regenerated, but otherwise include files for users to poke around -->
+    	<copy todir="${install.dir}/doc/Training">
+    		<fileset dir="doc/Training">
+    			<include name="**/*"/>
+    			<exclude name="**/*.chk"/>
+    			<exclude name="**/*.log"/>
+    			<exclude name="**/*.check.html"/>
+    			<exclude name="**/*.ppt"/>
+    			<exclude name="**/graphics/**"/>
+    			</fileset>
+    		</copy>
+    </target>
+    
+    <target name="-standard-exe" depends="-init-installer" description="create StateModGUI.exe">
+        <launch4j-exe exe="StateModGUI"
+            mainClass="DWR.StateModGUI.StateModGUI">
+            <opts>
+                <opt>"-Dstatemodgui.home=%EXEDIR%/.."</opt>
+            </opts>
+        </launch4j-exe>
+    </target>
+    
+</project>

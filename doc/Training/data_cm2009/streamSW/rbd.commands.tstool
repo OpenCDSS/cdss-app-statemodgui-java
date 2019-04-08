@@ -1,0 +1,108 @@
+# rbd.commands.tstool
+# Purpose of File -
+#	Selection of Pattern Gages for Daily Model
+#	Adding and removing transbasin diversions and imports, respectively, for 6 gages
+#	Fill daily data for 1 Pattern Gage with missing daily data
+#
+#
+# Set Water Year and Output Period of 10/01/1955 - 9/30/2005
+SetOutputYearType(OutputYearType=Water)
+SetOutputPeriod(OutputStart="10/01/1955",OutputEnd="9/30/2005")
+#
+#
+# 09010500 - COLORADO R BELOW BAKER GULCH, NR GRAND LAKE, CO.
+09010500.USGS.Streamflow.Day~HydroBase
+# 09010000 - GRAND RIVER DITCH AT LA POUDRE PASS @ 10 FT PARSHALL FLUME
+09010000.DWR.Streamflow.Day~HydroBase
+Add(TSID="09010500.USGS.Streamflow.Day",AddTSList=SpecifiedTSID,AddTSID="09010000.DWR.Streamflow.Day",HandleMissingHow="IgnoreMissing")
+Free(TSList=LastMatchingTSID,TSID="09010000.DWR.Streamflow.Day~HydroBase")
+#
+#**********************************************************************
+#**********************************************************************
+#The code below was our first choice in handeling the Fraser River and the reach of the Colorado Main Stem above the Eagle River
+#	but daily data was not available from Denver as of 8/23/2006. If the data becomes available in the future consider
+#	revising this section of the code to incorporate that data.
+#**********************************************************************
+## 09024000 - FRASER RIVER AT WINTER PARK
+#09024000.USGS.Streamflow.Day~HydroBase
+## 09021500 - BERTHOUD PASS DITCH AT BERTHOUD PASS
+#09021500.DWR.Streamflow.Day~HydroBase
+##--------------------------------------------------------------------
+##Need to reincorporate this code once Denver provides the daily data
+#### 510639 - FRASER RIVER DIVR PROJ
+###510639.DNVR.Diversion.Day~StateMod~..\Diversions\510639.stm
+###add(TSID="09024000.USGS.Streamflow.Day",TSList="SpecifiedTS",AddTSID="09021500.DWR.Streamflow.Day,510639.DNVR.Diversion.Day",HandleMissingHow=IgnoreMissing)
+###free(TSID="09021500.DWR.Streamflow.Day~HydroBase")
+###free(TSID="510639.DNVR.Diversion.Day~StateMod")
+##--------------------------------------------------------------------
+##and remove the two lines below
+#add(TSID="09024000.USGS.Streamflow.Day",TSList="SpecifiedTS",AddTSID="09021500.DWR.Streamflow.Day",HandleMissingHow=IgnoreMissing)
+#free(TSID="09021500.DWR.Streamflow.Day~HydroBase")
+#**********************************************************************
+#**********************************************************************
+#
+# 09036000 - WILLIAMS FORK RIVER NEAR LEAL, CO
+09036000.USGS.Streamflow.Day~HydroBase
+# 514603 - WILLIAMS FORK TUNNEL
+514603.DWR.DivTotal.Day~HydroBase
+# APGTUNCO - AUGUST P. GUMLICK TUNNEL NEAR JONES PASS
+APGTUNCO.DWR.Streamflow.Day~HydroBase
+FillFromTS(TSList=LastMatchingTSID,TSID="APGTUNCO.DWR.Streamflow.Day",IndependentTSList=LastMatchingTSID,IndependentTSID="514603.DWR.DivTotal.Day")
+Add(TSID="09036000.USGS.Streamflow.Day",AddTSList=SpecifiedTSID,AddTSID="APGTUNCO.DWR.Streamflow.Day",HandleMissingHow="IgnoreMissing")
+Free(TSList=LastMatchingTSID,TSID="514603.DWR.DivTotal.Day~HydroBase")
+Free(TSList=LastMatchingTSID,TSID="APGTUNCO.DWR.Streamflow.Day")
+#
+#
+#
+# 09047500 - SNAKE RIVER NEAR MONTEZUMA, CO.
+09047500.USGS.Streamflow.Day~HydroBase
+# 09047300 - VIDLER TUNNEL NEAR ARGENTINE PASS
+09047300.DWR.Streamflow.Day~HydroBase
+Add(TSID="09047500.USGS.Streamflow.Day",AddTSList=SpecifiedTSID,AddTSID="09047300.DWR.Streamflow.Day",HandleMissingHow="IgnoreMissing")
+Free(TSList=LastMatchingTSID,TSID="09047300.DWR.Streamflow.Day~HydroBase")
+#
+#
+#
+# 09063000 - EAGLE RIVER AT RED CLIFF, CO.
+09063000.USGS.Streamflow.Day~HydroBase
+# 09061500 - COLUMBINE DITCH NEAR FREMONT PASS
+09061500.DWR.Streamflow.Day~HydroBase
+# 09062000 - EWING DITCH AT TENNESSEE PASS
+09062000.DWR.Streamflow.Day~HydroBase
+# 09062500 - WURTZ DITCH NEAR TENNESSEE PASS
+09062500.DWR.Streamflow.Day~HydroBase
+FillRegression(TSID="09062000.DWR.Streamflow.Day",IndependentTSID="09062500.DWR.Streamflow.Day",NumberOfEquations=MonthlyEquations,Transformation=Log,FillStart="10/1/1974",FillEnd="9/30/1979")
+Add(TSID="09063000.USGS.Streamflow.Day",AddTSList=SpecifiedTSID,AddTSID="09061500.DWR.Streamflow.Day,09062000.DWR.Streamflow.Day,09062500.DWR.Streamflow.Day",HandleMissingHow="IgnoreMissing")
+Free(TSList=LastMatchingTSID,TSID="09061500.DWR.Streamflow.Day~HydroBase")
+Free(TSList=LastMatchingTSID,TSID="09062000.DWR.Streamflow.Day~HydroBase")
+Free(TSList=LastMatchingTSID,TSID="09062500.DWR.Streamflow.Day~HydroBase")
+#
+#
+#
+# 09081600 - CRYSTAL RIVER ABOVE AVALANCHE CREEK NEAR REDSTONE
+09081600.USGS.Streamflow.Day~HydroBase
+#
+#
+#
+# 09089500 - WEST DIVIDE CREEK NEAR RAVEN
+09089500.DWR.Streamflow.Day~HydroBase
+# 404657 - DIVIDE CR HL FEEDER D
+404657.DWR.DivTotal.Day~HydroBase
+# 450576 - DIVIDE CREEK HIGHLINE D
+450576.DWR.DivClass-S:1 F:4657 U:1 T:.Day~HydroBase
+# 450576 - DIVIDE CREEK HIGHLINE D
+450576.DWR.DivClass-S:4 F:4657 U:1 T:.Day~HydroBase
+FillFromTS(TSList=LastMatchingTSID,TSID="404657.DWR.DivTotal.Day",IndependentTSList=LastMatchingTSID,IndependentTSID="450576.DWR.DivClass-S:1 F:4657 U:1 T:.Day")
+FillFromTS(TSList=LastMatchingTSID,TSID="404657.DWR.DivTotal.Day",IndependentTSList=LastMatchingTSID,IndependentTSID="450576.DWR.DivClass-S:4 F:4657 U:1 T:.Day")
+Subtract(TSID="09089500.DWR.Streamflow.Day",SubtractTSList=SpecifiedTSID,SubtractTSID="404657.DWR.DivTotal.Day",HandleMissingHow="IgnoreMissing")
+Free(TSList=LastMatchingTSID,TSID="404657.DWR.DivTotal.Day~HydroBase")
+Free(TSList=LastMatchingTSID,TSID="450576.DWR.DivClass-S:4 F:4657 U:1 T:.Day")
+Free(TSList=LastMatchingTSID,TSID="450576.DWR.DivClass-S:1 F:4657 U:1 T:.Day")
+FillRegression(TSID="09089500.DWR.Streamflow.Day",IndependentTSID="09081600.USGS.Streamflow.Day",NumberOfEquations=MonthlyEquations,Transformation=Log,FillStart="1/1/1998",FillEnd="9/30/2005")
+ReplaceValue(TSList=LastMatchingTSID,TSID="09089500.DWR.Streamflow.Day",MinValue=-100,MaxValue=0,NewValue=0)
+#
+# 09152500 - GUNNISON RIVER NEAR GRAND JUNCTION
+09152500.USGS.Streamflow.Day~HydroBase
+#
+# Generate StateMod formatted file
+WriteStateMod(TSList=AllTS,OutputFile="..\statemod\cm2005.rbd")

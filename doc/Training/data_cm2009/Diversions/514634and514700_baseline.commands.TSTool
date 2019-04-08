@@ -1,0 +1,21 @@
+SetOutputPeriod(OutputStart="10/1908",OutputEnd="9/2006")
+SetOutputYearType(OutputYearType=Water)
+ReadDateValue(InputFile="Existing Conditions WG and AT.dv")
+09013000.DWR.Streamflow.Month~HydroBase
+ADANETCO.DWR.Streamflow.Month~HydroBase
+FillFromTS(TSList=AllMatchingTSID,TSID="09013000.DWR.Streamflow.Month",IndependentTSList=AllMatchingTSID,IndependentTSID="ADANETCO.DWR.Streamflow.Month")
+FillFromTS(TSList=AllMatchingTSID,TSID="AT_EC",IndependentTSList=AllMatchingTSID,IndependentTSID="09013000.DWR.Streamflow.Month",FillStart="10/1949",FillEnd="09/2006")
+#
+# Fill pre-1947 and gap from 1992-1996
+#
+ReadPatternFile(PatternFile="fill2006.pat")
+FillPattern(TSList=AllMatchingTSID,TSID="AT_EC",PatternID="09034500")
+FillHistMonthAverage(TSList=AllMatchingTSID,TSID="AT_EC")
+WriteStateMod(TSList=AllMatchingTSID,TSID="AT_EC",OutputFile="514634_baseline.stm",Precision=0)
+514700.DWR.DivTotal.Month~HydroBase
+FillFromTS(TSList=AllMatchingTSID,TSID="WG_EC",IndependentTSList=AllMatchingTSID,IndependentTSID="514700.DWR.DivTotal.Month",FillStart="10/1996",FillEnd="09/2006")
+FillPattern(TSList=AllMatchingTSID,TSID="WG_EC",PatternID="09034500")
+FillHistMonthAverage(TSList=AllMatchingTSID,TSID="WG_EC")
+WriteStateMod(TSList=AllMatchingTSID,TSID="WG_EC",OutputFile="514700_baseline.stm",Precision=0)
+
+

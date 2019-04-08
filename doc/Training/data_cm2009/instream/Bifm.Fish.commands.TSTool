@@ -1,0 +1,5 @@
+950500...MONTH~StateMod~C:\CDSS\Data\cm2009\statemod\cm2009b.ifm
+952002...MONTH~StateMod~C:\CDSS\Data\cm2009\instream\952002_baseline.stm
+954620...MONTH~StateMod~C:\CDSS\Data\cm2009\statemod\cm2009b.ifm
+SetOutputYearType(OutputYearType=Water)
+WriteStateMod(TSList=AllTS,OutputFile="..\StateMod",OutputStart="10/1949",OutputEnd="09/2005",Precision=0)

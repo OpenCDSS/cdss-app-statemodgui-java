@@ -1,0 +1,21 @@
+# rin.commands.StateDMI
+#
+# creates the river newtork file for the Colorado River monthly/daily models
+#
+#  Step 1 - read river nodes from the network file and create file framework
+#
+ReadNetworkFromStateMod(InputFile="cm2009.net")
+CreateRiverNetworkFromNetwork()
+#
+#  Step 2 - get node (diversion, stream stations, reservoirs, instream flows)
+#           names from from HydroBase
+#
+FillRiverNetworkFromHydroBase(ID="*",NameFormat=StationName_NodeType)
+#
+#  Step 3 - read missing node names from network file
+#
+FillRiverNetworkFromNetwork(ID="*",NameFormat="StationName_NodeType",CommentFormat="StationID")
+#
+#  Step 4 - create StateMod river network file
+#
+WriteRiverNetworkToStateMod(OutputFile="..\StateMod\cm2009.rin")

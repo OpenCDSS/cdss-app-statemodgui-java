@@ -1,0 +1,14 @@
+#     Baseline Demands for Roberts Tunnel
+#
+# Demands for Roberts Tunnel (Node 364684), and Moffat Tunnel (Node 514655) were set equal to the demands in the Denver Water Moffat Collection System Project Full Use Existing Conditions EIS Model run
+# (recommendation from Heather Thompson as part of her CSU work)
+#
+#     rfp 7/27/09 - Filled pre-1950 data using standard fillpattern approach with Colorado R at Hot Sulphur Springs (ID 09034500)
+#
+SetOutputPeriod(OutputStart="10/1908",OutputEnd="9/2005")
+SetOutputYearType(OutputYearType=Water)
+ReadPatternFile(PatternFile="fill2005.pat")
+364684...MONTH~StateMod~364684_CSU.stm
+FillPattern(TSList=AllTS,PatternID="09034500")
+FillHistMonthAverage(TSList=AllTS)
+WriteStateMod(TSList=AllTS,OutputFile="364684_BuildOutBaseline.stm",Precision=0)
