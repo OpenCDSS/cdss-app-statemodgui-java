@@ -1,5 +1,28 @@
+// StateModGUI_JFrame - main window for StateModGUI
+
+/* NoticeStart
+
+StateMod GUI
+StateMod GUI is a part of Colorado's Decision Support Systems (CDSS)
+Copyright (C) 1997-2019 Colorado Department of Natural Resources
+
+StateMod GUI is free software:  you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+StateMod GUI is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+    along with StateMod GUI.  If not, see <https://www.gnu.org/licenses/>.
+
+NoticeEnd */
+
 //------------------------------------------------------------------------------
-// StateModGUI_JFrame - initial and main window for StateModGUI
+// StateModGUI_JFrame - main window for StateModGUI
 //------------------------------------------------------------------------------
 // Copyright:	See the COPYRIGHT file.
 //------------------------------------------------------------------------------
@@ -368,6 +391,7 @@ import RTi.Util.Table.TableRecord;
 import RTi.Util.Time.DateTime;
 import RTi.Util.Time.StopWatch;
 
+@SuppressWarnings("serial")
 public class StateModGUI_JFrame extends JFrame implements 
 ActionListener, ComponentListener, GeoViewListener, ProcessListener,
 StateMod_GUIUpdatable,	// Requires updateWindowStatus()
@@ -1494,9 +1518,25 @@ public void actionPerformed(ActionEvent e)
 	else if ( source == __Help_AboutStateModGUI_JMenuItem ) {
 		StringBuffer helptext = new StringBuffer();
 		helptext.append("StateMod Graphical User Interface (StateModGUI)\n");
-		helptext.append("Copyright 1997-2013\n");
 		helptext.append("Version " + IOUtil.getProgramVersion() + "\n");
 		helptext.append("Developed with StateMod Version 13.00.00 (2012/02/15)\n");
+		helptext.append("\n"+
+		"StateMod GUI is a part of Colorado's Decision Support Systems (CDSS)\n" +
+		"Copyright (C) 1997-2019 Colorado Department of Natural Resources\n" +
+		" \n" +
+		"StateMod GUI is free software:  you can redistribute it and/or modify\n" +
+		"    it under the terms of the GNU General Public License as published by\n" +
+		"    the Free Software Foundation, either version 3 of the License, or\n" +
+		"    (at your option) any later version.\n" +
+		" \n" +
+		"StateMod GUI is distributed in the hope that it will be useful,\n" +
+		"    but WITHOUT ANY WARRANTY; without even the implied warranty of\n" +
+		"    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the\n" +
+		"    GNU General Public License for more details.\n" +
+		" \n" +
+		"You should have received a copy of the GNU General Public License\n" +
+		"    along with StateMod GUI.  If not, see <https://www.gnu.org/licenses/>.\n" +
+		" \n" );
 		String responseFile = "";
 		StateMod_DataSet dataSet = getDataSet();
 		if ( dataSet != null ) {
@@ -1520,9 +1560,8 @@ public void actionPerformed(ActionEvent e)
 		helptext.append("Colorado Department of Natural Resources\n");
 		helptext.append("Colorado Division of Water Resources\n");
 		helptext.append("Colorado Water Conservation Board\n");
-		helptext.append("Developed by Riverside Technology, inc.\n");
 		helptext.append("Send comments about this interface to\n");
-		helptext.append("cdss@state.co.us\n");
+		helptext.append("DNR_OpenCDSS@state.co.us\n");
 		new HelpAboutJDialog(this, "About StateMod/StateMod GUI", helptext.toString(), true);
 	}
 	else if ( source == __Help_ViewStateModDocumentation_JMenuItem ) {

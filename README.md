@@ -160,6 +160,16 @@ Browse to the `git-repos` folder and select all the projects that are listed and
 The software should compile automatically when the Eclipse workspace is opened.
 Run using the ***Run Configurations***, for example ***StateModGUI*** run configuration to launch the StateMod GUI.
 
+To distribute the software, run the ***External Tool Configurations*** in Eclipse:
+
+1. For the legacy software, which uses PDF documenation in the installer, first need to build the PDF docuementation
+by merging separate PDF files into one large document as `doc/UserManual/dist/StateModGUI.pdf`.
+Each PDF file should be an even number of pages.  **The tool to do the merge needs to be udpated (OWF developed a custom tool)**.
+2. Run the ***Clean and build local install, no setup.exe (requires merged PDF)*** external tool.
+This creates a local folder structure in `dist`.
+3. Run the ***Local Install to Setup.exe (requires local install)*** external tool.
+This will create a self-extracting installer in `dist`, suitable for distribution.
+
 ## Contributing ##
 
 Contributions to this project can be submitted using the following options:
@@ -181,4 +191,4 @@ The software is licensed under GPL v3+. See the [LICENSE.md](LICENSE.md) file.
 
 ## Contact ##
 
-See the [OpenCDSS TSTool information for product contacts](http://learn.openwaterfoundation.org/cdss-website-opencdss/statemodgui/statemodgui/#product-leadership).
+See the [OpenCDSS StateMod GUI information for product contacts](http://learn.openwaterfoundation.org/cdss-website-opencdss/statemodgui/statemodgui/#product-leadership).
