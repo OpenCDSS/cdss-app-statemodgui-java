@@ -1,3 +1,26 @@
+// StateModGUI - main program file for StateMod GUI
+//
+/* NoticeStart
+
+StateMod GUI
+StateMod GUI is a part of Colorado's Decision Support Systems (CDSS)
+Copyright (C) 1997-2019 Colorado Department of Natural Resources
+
+StateMod GUI is free software:  you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+StateMod GUI is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+    along with StateMod GUI.  If not, see <https://www.gnu.org/licenses/>.
+
+NoticeEnd */
+
 // ---------------------------------------------------------------------------
 // StateModGUI - main program file for StateMod GUI
 // ---------------------------------------------------------------------------
@@ -165,6 +188,7 @@ The StateModGUI class is the entry point into the StateMod GUI application.  The
 program can run either as an applet or a stand-alone application.  The main
 program performs basic initialization and then starts up the graphical user interface.
 */
+@SuppressWarnings("serial")
 public class StateModGUI extends JApplet
 {
 
@@ -404,7 +428,7 @@ throws Exception
 		else if (args[i].equals("-test")) {
 			IOUtil.testing(true);
 		}
-		else if (args[i].equalsIgnoreCase("-v")) {
+		else if (args[i].equalsIgnoreCase("-v") || args[i].equalsIgnoreCase("--version")) {
 			printVersion ();
 		}
 	}
@@ -465,7 +489,22 @@ Print the program version and exit the program.
 */
 public static void printVersion ( )
 {	String nl = System.getProperty ( "line.separator" );
-	System.out.println (  nl + PROGRAM_NAME + " version: " + PROGRAM_VERSION + nl + nl );
+	System.out.println (  nl + PROGRAM_NAME + " version: " + PROGRAM_VERSION + nl + nl +
+	"StateMod GUI is a part of Colorado's Decision Support Systems (CDSS)\n" +
+	"Copyright (C) 1997-2019 Colorado Department of Natural Resources\n" +
+	"\n" +
+	"StateMod GUI is free software:  you can redistribute it and/or modify\n" +
+	"    it under the terms of the GNU General Public License as published by\n" +
+	"    the Free Software Foundation, either version 3 of the License, or\n" +
+	"    (at your option) any later version.\n" +
+	"\n" +
+	"StateMod GUI is distributed in the hope that it will be useful,\n" +
+	"    but WITHOUT ANY WARRANTY; without even the implied warranty of\n" +
+	"    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the\n" +
+	"    GNU General Public License for more details.\n" +
+	"\n" +
+	"You should have received a copy of the GNU General Public License\n" +
+	"    along with StateMod GUI.  If not, see <https://www.gnu.org/licenses/>.\n" );
 	quitProgram (0);
 }
 
