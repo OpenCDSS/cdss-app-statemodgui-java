@@ -7,6 +7,10 @@
 # Ignore log files
 *.log
 
+# Ignore files like the following created when running using the training dataset:
+# doc/Training/data_cm2009/statemod/x-gui-MissingSpatial-dds.csv
+/doc/Training/data_cm2009/statemod/x-gui-MissingSpatial-*.csv
+
 # Ignore vi editor swap files
 *.swp
 *.swo
