@@ -36,7 +36,7 @@ checkOperatingSystem()
 		return
 	fi
 	operatingSystem="unknown"
-	os=`uname | tr [a-z] [A-Z]`
+	os=$(uname | tr [a-z] [A-Z])
 	case "${os}" in
 		CYGWIN*)
 			operatingSystem="cygwin"
@@ -59,21 +59,21 @@ checkCommandLineGitCompatibility()
 	# Make sure that the operating system has been determined
 	# - will set operatingSystem to "cygwin" if cygwin
 	checkOperatingSystem
-	filemodeLine=`git config --list | grep filemode`
+	filemodeLine=$(git config --list | grep filemode)
 	#echo "${filemodeLine}"
 	if [ ! -z "${filemodeLine}" ]; then
 		# filemode is usually printed by Git bash but may not be printed by Cygwin
 		# - if repo was cloned using Git Bash:  core.filemode=false
-		filemode=`echo $filemodeLine | cut --delimiter='=' --fields=2`
+		filemode=$(echo $filemodeLine | cut --delimiter='=' --fields=2)
 		#echo "repository filemode=$filemode"
 		if [ "${filemode}" = "true" ] && [ "${operatingSystem}" = "cygwin" ]; then
 			# Count Cygwin repos so message can be printed at the end
-			cygwinRepoCount=`expr ${cygwinRepoCount} + 1`
+			cygwinRepoCount=$(expr ${cygwinRepoCount} + 1)
 			#echo "cygwinRepoCount=${cygwinRepoCount}"
 		fi
 		if [ "${operatingSystem}" = "linux" ]; then
 			# No need for any special logic because no Git Bash or Cygwin
-			if [ "${repoCount}" = "0" ]; then
+			if [ "${repoCount}" -eq 0 ]; then
 				echo "Detected Linux operating system"
 			fi
 		elif [ "${operatingSystem}" = "cygwin" ] && [ "${filemode}" = "false" ]; then
@@ -90,7 +90,7 @@ checkCommandLineGitCompatibility()
 			# Probably cloned using Git Bash or other Windows-centric Git client so OK
 			echo "USE Git Bash or other Windows Git client with this repo (filemode=false)."
 		else
-			echo2 "${actionColor}Unhandled operating system ${operatingSystem} - no git client recommendations provided.${colorEnd}"
+			${echo2} "${actionColor}Unhandled operating system ${operatingSystem} - no git client recommendations provided.${colorEnd}"
 		fi
 	fi
 }
@@ -100,8 +100,8 @@ checkCommandLineGitCompatibility()
 # - print a message if so
 # - assumes that the current folder is a Git repository of interest
 # - see:  https://stackoverflow.com/questions/3882838/whats-an-easy-way-to-detect-modified-files-in-a-git-workspace
-checkWorkingFiles()
-{
+checkWorkingFiles() {
+	local emptyFolderCount exitCode untrackedFilesCount
 	# The following won't work if run in Cygwin shell for non-Cygwin repo clone, or the other way
 	git diff-index --quiet HEAD
 	# Therefore, use the following (although this could ignore newline cleanup that needs to be committed)
@@ -109,19 +109,36 @@ checkWorkingFiles()
 	#   warning:  CRLF will be replaced by LF in ...
 	#   The file will have its original line endings in your working directory.
 	#git diff-index --ignore-cr-at-eol --quiet HEAD
-	exitCode=$?
+	gitDiffExitCode=$?
 	#echo "exitCode=$exitCode"
-	if [ $exitCode -eq 1 ]; then
+	if [ $gitDiffExitCode -eq 1 ]; then
 		${echo2} "${actionColor}Working files contain modified files that need to be committed, or staged files.${colorEnd}"
 	fi
 	# The above won't detect untracked files but the following will find those
 	# - the following will return a value of 0 or greater
-	untrackedFilesCount=`git ls-files -o --directory --exclude-standard | wc -l`
-	if [ ${untrackedFilesCount} -ne "0" ]; then
+	# -o shows other (i.e., untracked) files in the output
+	# --directory shows entire untracked directories as directory name followed by slash
+	# --exclude-standard excludes standard files such as indicated by .gitignore
+	# --no-empty-directory excludes empty directories,
+	# which won't be committed anyhow because Git does not save empty directories
+	untrackedFilesCount=$(git ls-files -o --directory --no-empty-directory --exclude-standard | wc -l)
+	if [ ${untrackedFilesCount} -ne 0 ]; then
 		${echo2} "${actionColor}Working files contain ${untrackedFilesCount} untracked files that need to be committed.${colorEnd}"
 	fi
-	if [ $exitCode -eq 1 -o ${untrackedFilesCount} -ne "0" ]; then
-		localChangesRepoCount=`expr ${localChangesRepoCount} + 1`
+	# If there are empty folders, gitDiffExitCode will be nonzero
+	# - to make sure it is not confusing, list the directories here
+	# - will only be confusing if the untracked files are zero (since they ignore empty folders)
+	if [ ${untrackedFilesCount} -eq 0 -a ${gitDiffExitCode} -eq 1 ]; then
+		# Message was printed above, likely due to empty folders
+		${echo2} "${actionColor}Empty folders should be added to .gitignore, add README to folder, etc.:${colorEnd}"
+		# Should already be in the repository folder
+		find . -type d -empty | grep -v '.git'
+		# Track repositories with empty folders, often indicate an issue
+		emptyFoldersRepoCount=$(expr ${emptyFoldersRepoCount} + 1)
+	fi
+	# Global script data..
+	if [ $gitDiffExitCode -eq 1 -a $untrackedFilesCount -ne 0 ]; then
+		localChangesRepoCount=$(expr ${localChangesRepoCount} + 1)
 	fi
 }
 
@@ -131,7 +148,7 @@ checkWorkingFiles()
 checkRepoStatus()
 {
 	# Current branch
-	currentRepo=`git branch | grep \* | cut -d ' ' -f2`
+	currentRepo=$(git branch | grep \* | cut -d ' ' -f2)
 	# Repo that is the master, to which all work flows - used to check whether on a branch
 	masterRepo="master"
 
@@ -148,53 +165,80 @@ checkRepoStatus()
 	errorCount=0
 	UPSTREAM=${1:-'@{u}'}
 	LOCAL=$(git rev-parse @)
-	if [ "$?" -ne "0" ]; then
-		errorCount=`expr ${errorCount} + 1`
+	if [ $? -ne 0 ]; then
+		errorCount=$(expr ${errorCount} + 1)
 	fi
 	REMOTE=$(git rev-parse "$UPSTREAM")
-	if [ "$?" -ne "0" ]; then
-		errorCount=`expr ${errorCount} + 1`
+	if [ $? -ne 0 ]; then
+		errorCount=$(expr ${errorCount} + 1)
 	fi
 	BASE=$(git merge-base @ "$UPSTREAM")
-	if [ "$?" -ne "0" ]; then
-		errorCount=`expr ${errorCount} + 1`
+	if [ $? -ne 0 ]; then
+		errorCount=$(expr ${errorCount} + 1)
 	fi
 
 	# There may be errors in the Git commands if working in a branch but there is no remote.
 	# For example, this might be a local feature/topic branch that is checked out from master.
-	if [ "${errorCount}" -ne "0" ]; then
+	if [ ${errorCount} -ne 0 ]; then
 		${echo2} "${actionColor}Error checking upstream repository.${colorEnd}"
 		${echo2} "${actionColor}May be a local branch that has not been pushed to remote.${colorEnd}"
 		${echo2} "${actionColor}Remote repository name may have changed.${colorEnd}"
 	fi
 
-	repoCount=`expr ${repoCount} + 1`
+	repoCount=$(expr ${repoCount} + 1)
 	if [ "$LOCAL" = "$REMOTE" ]; then
 		echo "------------------"
 		${echo2} "${okColor}Up-to-date${colorEnd}"
 		checkWorkingFiles
-		upToDateRepoCount=`expr ${upToDateRepoCount} + 1`
+		upToDateRepoCount=$(expr ${upToDateRepoCount} + 1)
 		echo "------------------"
 	elif [ "$LOCAL" = "$BASE" ]; then
 		echo "------------------"
 		${echo2} "${actionColor}Need to pull${colorEnd}"
 		checkWorkingFiles
-		needToPullRepoCount=`expr ${needToPullRepoCount} + 1`
+		needToPullRepoCount=$(expr ${needToPullRepoCount} + 1)
 		echo "------------------"
 	elif [ "$REMOTE" = "$BASE" ]; then
 		echo "------------------"
 		${echo2} "${actionColor}Need to push${colorEnd}"
 		checkWorkingFiles
-		needToPushRepoCount=`expr ${needToPushRepoCount} + 1`
+		needToPushRepoCount=$(expr ${needToPushRepoCount} + 1)
 		echo "------------------"
 	else
 		echo "------------------"
 		${echo2} "${actionColor}Diverged${colorEnd}"
 		checkWorkingFiles
-		divergedRepoCount=`expr ${divergedRepoCount} + 1`
+		divergedRepoCount=$(expr ${divergedRepoCount} + 1)
 		echo "------------------"
 	fi
 	# End code from above StackOverflow article
+}
+
+# Determine which echo to use, needs to support -e to output colored text
+# - normally built-in shell echo is OK, but on Debian Linux dash is used, and it does not support -e
+configEcho() {
+	echo2='echo -e'
+	testEcho=$(echo -e test)
+	if [ "${testEcho}" = '-e test' ]; then
+		# The -e option did not work as intended.
+		# -using the normal /bin/echo should work
+		# -printf is also an option
+		echo2='/bin/echo -e'
+		# The following does not seem to work
+		#echo2='printf'
+	fi
+
+	# Strings to change colors on output, to make it easier to indicate when actions are needed
+	# - Colors in Git Bash:  https://stackoverflow.com/questions/21243172/how-to-change-rgb-colors-in-git-bash-for-windows
+	# - Useful info:  http://webhome.csc.uvic.ca/~sae/seng265/fall04/tips/s265s047-tips/bash-using-colors.html
+	# - See colors:  https://en.wikipedia.org/wiki/ANSI_escape_code#Unix-like_systems
+	# - Set the background to black to eensure that white background window will clearly show colors contrasting on black.
+	# - Yellow "33" in Linux can show as brown, see:  https://unix.stackexchange.com/questions/192660/yellow-appears-as-brown-in-konsole
+	# - Tried to use RGB but could not get it to work - for now live with "yellow" as it is
+	actionColor='\e[0;40;33m' # user needs to do something, 40=background black, 33=yellow
+	actionWarnColor='\e[0;40;31m' # serious issue, 40=background black, 31=red
+	okColor='\e[0;40;32m' # status is good, 40=background black, 32=green
+	colorEnd='\e[0m' # To switch back to default color
 }
 
 # Parse the command parameters
@@ -278,20 +322,10 @@ printVersion() {
 # Entry point into main script
 # - call functions from above as needed
 
-version="1.7.0 2018-12-27"
+version="1.8.0 2019-04-17"
 
-# Determine which echo to use, needs to support -e to output colored text
-# - normally built-in shell echo is OK, but on Debian Linux dash is used, and it does not support -e
-echo2='echo -e'
-testEcho=`echo -e test`
-if [ "${testEcho}" = '-e test' ]; then
-	# The -e option did not work as intended.
-	# -using the normal /bin/echo should work
-	# -printf is also an option
-	echo2='/bin/echo -e'
-	# The following does not seem to work
-	#echo2='printf'
-fi
+# Configure the echo command to print colors
+configEcho
 
 # Parse the command line
 parseCommandLine "$@"
@@ -300,18 +334,6 @@ parseCommandLine "$@"
 
 echo ""
 echo ""
-
-# Strings to change colors on output, to make it easier to indicate when actions are needed
-# - Colors in Git Bash:  https://stackoverflow.com/questions/21243172/how-to-change-rgb-colors-in-git-bash-for-windows
-# - Useful info:  http://webhome.csc.uvic.ca/~sae/seng265/fall04/tips/s265s047-tips/bash-using-colors.html
-# - See colors:  https://en.wikipedia.org/wiki/ANSI_escape_code#Unix-like_systems
-# - Set the background to black to eensure that white background window will clearly show colors contrasting on black.
-# - Yellow "33" in Linux can show as brown, see:  https://unix.stackexchange.com/questions/192660/yellow-appears-as-brown-in-konsole
-# - Tried to use RGB but could not get it to work - for now live with "yellow" as it is
-actionColor='\e[0;40;33m' # user needs to do something, 40=background black, 33=yellow
-actionWarnColor='\e[0;40;31m' # serious issue, 40=background black, 31=red
-okColor='\e[0;40;32m' # status is good, 40=background black, 32=green
-colorEnd='\e[0m' # To switch back to default color
 
 # Check the operating system
 checkOperatingSystem
@@ -366,6 +388,7 @@ needToPullRepoCount=0
 needToPushRepoCount=0
 divergedRepoCount=0
 localChangesRepoCount=0
+emptyFoldersRepoCount=0
 
 # Change folders to each repository and run the function to check that repository status
 # against its upstream repository.
@@ -377,12 +400,12 @@ do
 	# Make sure there are no carriage returns in the string
 	# - can happen because file may have Windows-like endings but Git Bash is Linux-like
 	#- use sed because it is more likely to be installed than dos2unix
-	repoName=`echo ${repoName} | sed 's/\r$//'`
+	repoName=$(echo ${repoName} | sed 's/\r$//')
 	if [ -z "${repoName}" ]; then
 		# Blank line
 		continue
 	fi
-	firstChar=`expr substr "${repoName}" 1 1` 
+	firstChar=$(expr substr "${repoName}" 1 1)
 	if [ "${firstChar}" = "#" ]; then
 		# Comment line
 		continue
@@ -414,7 +437,7 @@ echo "Summary of all repositories - see above for details"
 if [ "${operatingSystem}" != "linux" ]; then
 	# On windows so make sure that Cygwin and Git Bash is not mixed
 	# because can lead to confusion and technical issues
-	if [ "${cygwinRepoCount}" -ne "0" ] && [ "${repoCount}" -ne "${cygwinRepoCount}" ]; then
+	if [ ${cygwinRepoCount} -ne 0 ] && [ ${repoCount} -ne ${cygwinRepoCount} ]; then
 		${echo2} "${actionColor}Number of Cygwin-cloned repos (filemode=true) is ${cygwinRepoCount}, which is not = the repo count ${repoCount}.${colorEnd}"
 		${echo2} "${actionColor}Mixing Cygwin (filemode=true) and Git Bash (filemode=false) can cause issues.${colorEnd}"
 	fi
@@ -425,30 +448,35 @@ echo "Product Git repositories folder: ${gitReposFolder}"
 echo "Repository repository list file: ${repoListFile}"
 echo "================================================================================"
 echo "Number of repositories:                                                   ${repoCount}"
-if [ "${upToDateRepoCount}" -eq "${repoCount}" ]; then
+if [ ${upToDateRepoCount} -eq ${repoCount} ]; then
 	${echo2} "Number of up-to-date repositories:                                        ${okColor}${upToDateRepoCount}${colorEnd}"
 else
 	${echo2} "Number of up-to-date repositories:                                        ${actionColor}${upToDateRepoCount}${colorEnd}"
 fi
-if [ "${needToPullRepoCount}" = "0" ]; then
+if [ ${needToPullRepoCount} -eq 0 ]; then
 	${echo2} "Number of 'need to pull' repositories (remote commits available):         ${okColor}${needToPullRepoCount}${colorEnd}"
 else
 	${echo2} "Number of 'need to pull' repositories (remote commits available):         ${actionColor}${needToPullRepoCount}${colorEnd}"
 fi
-if [ "${needToPushRepoCount}" = "0" ]; then
+if [ ${needToPushRepoCount} -eq 0 ]; then
 	${echo2} "Number of 'need to push' repositories (local commits saved):              ${okColor}${needToPushRepoCount}${colorEnd}"
 else
 	${echo2} "Number of 'need to push' repositories (local commits saved):              ${actionColor}${needToPushRepoCount}${colorEnd}"
 fi
-if [ "${divergedRepoCount}" = "0" ]; then
+if [ ${divergedRepoCount} -eq 0 ]; then
 	${echo2} "Number of diverged repositories (need to pull and push):                  ${okColor}${divergedRepoCount}${colorEnd}"
 else
 	${echo2} "Number of diverged repositories (need to pull and push):                  ${actionColor}${divergedRepoCount}${colorEnd}"
 fi
-if [ "${localChangesRepoCount}" = "0" ]; then
+if [ ${localChangesRepoCount} -eq 0 ]; then
 	${echo2} "Number of repositories with local changes (working and/or staged files):  ${okColor}${localChangesRepoCount}${colorEnd}"
 else
 	${echo2} "Number of repositories with local changes (working and/or staged files):  ${actionColor}${localChangesRepoCount}${colorEnd}"
+fi
+if [ ${emptyFoldersRepoCount} -eq 0 ]; then
+	${echo2} "Number of repositories with empty folders:                                ${okColor}${emptyFoldersRepoCount}${colorEnd}"
+else
+	${echo2} "Number of repositories with empty folders:                                ${actionColor}${emptyFoldersRepoCount}${colorEnd}"
 fi
 echo "================================================================================"
 
